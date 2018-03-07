@@ -1,0 +1,33 @@
+{
+  "name": "vault-manager",
+  "version": "0.1.0",
+  "description": "A library that facilitates the core functions of the Radar Vault.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "tsc -p tsconfig.test.json && mocha --require mock-local-storage dist-test/**/*.test.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "Radar Relay <dev@radarrelay.com>",
+  "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^8.0.46",
+    "chai": "^3.5.0",
+    "dotenv": "^4.0.0",
+    "mocha": "^3.1.2",
+    "tslint": "^5.8.0",
+    "tslint-config-0xproject": "0.0.2",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "@0xproject/assert": "^0.1.0",
+    "es6-promisify": "^6.0.0",
+    "eth-lightwallet": "^3.0.1",
+    "mock-local-storage": "^1.0.5",
+    "semaphore-async-await": "^1.5.1",
+    "web3": "0.20.0",
+    "web3-provider-engine": "^13.6.5"
+  }
+}

@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+doc*
+.npmrc
+dist/**/*.map
+dist-test
