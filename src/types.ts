@@ -1,6 +1,6 @@
 import { keystore, signing } from 'eth-lightwallet';
 
-export interface VaultOptions {
+export interface CoreWalletOptions {
   password: string;
   seedPhrase?: string;
   salt?: string;
@@ -29,9 +29,30 @@ export interface JSONRPCPayload {
   method: string;
 }
 
-export enum VaultError {
+export interface Signer {
+  signPersonalMessageAsync(address: string, message: string): Promise<string>;
+  signTransactionAsync(txParams: PartialTxParams): Promise<string>;
+}
+
+export interface Wallet {
+  type: WalletType;
+  signer: Signer;
+}
+
+export interface TransactionManager {
+  sendTransaction(): void;
+  signMessage(): void;
+}
+
+export enum WalletError {
   LocalStorageDisabled = 'LOCAL_STORAGE_DISABLED',
-  NoVaultFound = 'NO_VAULT_FOUND'
+  NoWalletFound = 'NO_WALLET_FOUND',
+  InvalidSeed = 'INVALID_SEED',
+  InvalidPassword = 'INVALID_PASSWORD',
+}
+
+export enum SigningError {
+  UserDeclined = 'USER_DECLINED'
 }
 
 export enum WalletType {
@@ -45,3 +66,5 @@ export enum InfuraNetwork {
   Rinkeby,
   Ropsten
 }
+
+export declare type RpcConnection = string | InfuraNetwork;

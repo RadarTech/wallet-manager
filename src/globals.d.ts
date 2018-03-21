@@ -1,6 +1,6 @@
 // web3-provider-engine declarations
 declare module 'web3-provider-engine' {
-    export class Web3ProviderEngine {
+    class Web3ProviderEngine {
         public on(event: string, handler: () => void): void;
         public send(payload: any): void;
         public sendAsync(payload: any, callback: (error: any, response: any) => void): void;
@@ -8,6 +8,7 @@ declare module 'web3-provider-engine' {
         public start(): void;
         public stop(): void;
     }
+    export = Web3ProviderEngine;
 }
 
 // eth-lightwallet declarations
@@ -27,9 +28,11 @@ declare module 'eth-lightwallet' {
   export class keystore {
       public static createVault(options: any, callback?: Function);
       public static generateRandomSeed();
+      public static isSeedValid(seed: string);
       public static deserialize(keystore: string);
       public serialize();
       public keyFromPassword(password: string, callback?: Function);
+      public isDerivedKeyCorrect(pwDerivedKey: Uint8Array);
       public generateNewAddress(pwDerivedKey: Uint8Array, numberOfAddresses: number);
       public getSeed(pwDerivedKey: Uint8Array);
       public exportPrivateKey(address: string, pwDerivedKey: Uint8Array);

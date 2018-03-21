@@ -1,6 +1,6 @@
 import * as lightwallet from 'eth-lightwallet';
 import { keystore, signing } from 'eth-lightwallet';
-import { Vault } from './Vault';
+import { CoreWallet } from './Wallets/CoreWallet';
 
 export class Store {
 
@@ -22,23 +22,23 @@ export class Store {
   }
 
  /**
-  * Save the encrypted vault in local storage
+  * Save the encrypted wallet in local storage
   * 
-  * @param vault The vault to save
+  * @param wallet The wallet to save
   * @param keyName The key identifier
   */
-  public saveVault(vault: Vault, keyName: string = 'radar-vault') {
-    localStorage.setItem(keyName, vault.keystore.serialize());
+  public saveCoreWallet(wallet: CoreWallet, keyName: string = 'radar-core-wallet') {
+    localStorage.setItem(keyName, wallet.serialize());
 
     return true;
   }
 
  /**
-  * Load the encrypted vault from local storage
+  * Load the encrypted wallet from local storage
   * 
   * @param keyName The key identifier
   */
-  public loadVault(keyName: string = 'radar-vault') {
+  public loadCoreWallet(keyName: string = 'radar-core-wallet') {
     let keystore = null;
     const serializedKeystore = localStorage.getItem(keyName);
 

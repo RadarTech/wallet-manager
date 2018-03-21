@@ -19,21 +19,21 @@ class Store {
         }
     }
     /**
-     * Save the encrypted vault in local storage
+     * Save the encrypted wallet in local storage
      *
-     * @param vault The vault to save
+     * @param wallet The wallet to save
      * @param keyName The key identifier
      */
-    saveVault(vault, keyName = 'radar-vault') {
-        localStorage.setItem(keyName, vault.keystore.serialize());
+    saveCoreWallet(wallet, keyName = 'radar-core-wallet') {
+        localStorage.setItem(keyName, wallet.serialize());
         return true;
     }
     /**
-     * Load the encrypted vault from local storage
+     * Load the encrypted wallet from local storage
      *
      * @param keyName The key identifier
      */
-    loadVault(keyName = 'radar-vault') {
+    loadCoreWallet(keyName = 'radar-core-wallet') {
         let keystore = null;
         const serializedKeystore = localStorage.getItem(keyName);
         if (serializedKeystore) {

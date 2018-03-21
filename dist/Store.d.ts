@@ -1,4 +1,4 @@
-import { Vault } from './Vault';
+import { CoreWallet } from './Wallets/CoreWallet';
 export declare class Store {
     /**
      * Check if local storage is supported
@@ -7,16 +7,16 @@ export declare class Store {
      */
     isLocalStorageSupported(): boolean;
     /**
-     * Save the encrypted vault in local storage
+     * Save the encrypted wallet in local storage
      *
-     * @param vault The vault to save
+     * @param wallet The wallet to save
      * @param keyName The key identifier
      */
-    saveVault(vault: Vault, keyName?: string): boolean;
+    saveCoreWallet(wallet: CoreWallet, keyName?: string): boolean;
     /**
-     * Load the encrypted vault from local storage
+     * Load the encrypted wallet from local storage
      *
      * @param keyName The key identifier
      */
-    loadVault(keyName?: string): any;
+    loadCoreWallet(keyName?: string): any;
 }
