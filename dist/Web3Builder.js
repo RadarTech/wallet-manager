@@ -36,7 +36,7 @@ class Web3Builder {
      * @param transactionManager The transaction manager
      * @param connection The rpc connection url
      */
-    setSignerAndConnection(transactionManager, connection = types_1.InfuraNetwork.Mainnet) {
+    setSignerAndRpcConnection(transactionManager, connection = types_1.InfuraNetwork.Mainnet) {
         if (this.provider !== undefined) {
             this.provider.stop();
         }
@@ -45,7 +45,7 @@ class Web3Builder {
         return this.createWeb3Object(signingSubprovider, rpcSubprovider);
     }
     /**
-     * Adds one or more addresses to the wallet
+     * Creates the web3 object
      *
      * @param signingSubprovider The signing subprovider
      * @param rpcSubprovider The rpc subprovider

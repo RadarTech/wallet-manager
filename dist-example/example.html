@@ -1,0 +1,33 @@
+<html>
+   <head>
+      <title>Vault Manager Example</title>
+   </head>
+   <body>
+      <button onclick="createNewCoreWalletAsync()">Create New Vault</button>
+      <button id="initWeb3" onclick="initializeWeb3()" disabled>Initialize Web3</button>
+      <button id="callWeb3SendTransaction" onClick="callWeb3SendTransaction()" disabled>Call web3.eth.sendTransaction</button>
+      <button id="callWeb3Sign" onClick="callWeb3Sign()" disabled>Call web3.eth.sign</button>
+      <p>Active Address: <span id="activeAddress"></span></p>
+      <p>Web3 Initialized: <span id="web3Initialized">No</span></p>
+      <div id="txDiv" style="display:none;">
+         <h1>Sign Transaction</h1>
+         <p><span>From: </span><span id="from"></span></p>
+         <p><span>To: </span><span id="to"></span></p>
+         <label>Gas Price: <input type="text" id="gasPrice"></label>
+         <label>Gas Limit: <input type="text" id="gasLimit"></label>
+         <button id="cancelTxButton">Cancel</button>
+         <button id="signTxButton">Confirm</button>
+      </div>
+      <div id="msgDiv" style="display:none;">
+         <h1>Sign Message</h1>
+         <p><span>Message: </span><span id="message"></span></p>
+         <button id="cancelMsgButton">Cancel</button>
+         <button id="signMsgButton">Sign</button>
+      </div>
+      <div>
+        <p><span>Transaction Stack: </span><span id="txStack"></span></p>
+        <p><span>Transaction History: </span><span id="txHistory"></span></p>
+      </div>
+      <script src="./bundle.js"></script>
+   </body>
+</html>

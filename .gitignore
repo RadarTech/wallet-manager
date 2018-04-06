@@ -4,3 +4,5 @@ doc*
 .npmrc
 dist/**/*.map
 dist-test
+dist-example/example
+dist-example/src

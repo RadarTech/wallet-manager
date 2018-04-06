@@ -17,13 +17,13 @@ describe('CoreWalletManager', () => {
         // Export the seed phrase
         const seedPhrase = await coreWallet.exportSeedPhraseAsync(password);
 
-        // Get Vault Addresses
+        // Get Wallet Addresses
         const addresses = coreWallet.getAddresses();
 
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
 
-        // Vault should contain 1 address
+        // Wallet should contain 1 address
         expect(addresses.length).to.equal(1);
     });
 
@@ -46,7 +46,7 @@ describe('CoreWalletManager', () => {
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
 
-        // Vault should contain 1 address
+        // Wallet should contain 1 address
         expect(addresses.length).to.equal(1);
     });
 
@@ -56,7 +56,7 @@ describe('CoreWalletManager', () => {
 
         let errorMessage;
         try {
-            // Attempt to load the vault with an incorrect password
+            // Attempt to load the wallet with an incorrect password
             const coreWallet = await walletManager.core.loadWalletAsync(incorrectPassword);
         } catch(err) {
             errorMessage = err.message;

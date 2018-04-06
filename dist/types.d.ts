@@ -15,10 +15,18 @@ export interface PartialTxParams {
     gasPrice?: string;
     gas: string;
     to: string;
-    from: string;
+    from?: string;
     value?: string;
     data?: string;
     chainId: number;
+}
+export interface MsgParams {
+    from: string;
+    data: string;
+}
+export interface UnsignedPayload {
+    type: PayloadType;
+    params: PartialTxParams | MsgParams;
 }
 export interface JSONRPCPayload {
     params: any[];
@@ -33,8 +41,13 @@ export interface Wallet {
     signer: Signer;
 }
 export interface TransactionManager {
-    sendTransaction(): void;
-    signMessage(): void;
+    sendTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
+    signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
+}
+export declare enum PayloadType {
+    Tx = 0,
+    Msg = 1,
+    PersonalMsg = 2,
 }
 export declare enum WalletError {
     LocalStorageDisabled = "LOCAL_STORAGE_DISABLED",
@@ -50,9 +63,9 @@ export declare enum WalletType {
     Ledger = 1,
 }
 export declare enum InfuraNetwork {
-    Mainnet = 0,
-    Kovan = 1,
-    Rinkeby = 2,
-    Ropsten = 3,
+    Mainnet = "mainnet",
+    Kovan = "kovan",
+    Rinkeby = "rinkeby",
+    Ropsten = "ropsten",
 }
 export declare type RpcConnection = string | InfuraNetwork;

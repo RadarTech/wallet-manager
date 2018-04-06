@@ -1,5 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var PayloadType;
+(function (PayloadType) {
+    PayloadType[PayloadType["Tx"] = 0] = "Tx";
+    PayloadType[PayloadType["Msg"] = 1] = "Msg";
+    PayloadType[PayloadType["PersonalMsg"] = 2] = "PersonalMsg";
+})(PayloadType = exports.PayloadType || (exports.PayloadType = {}));
 var WalletError;
 (function (WalletError) {
     WalletError["LocalStorageDisabled"] = "LOCAL_STORAGE_DISABLED";
@@ -18,8 +24,8 @@ var WalletType;
 })(WalletType = exports.WalletType || (exports.WalletType = {}));
 var InfuraNetwork;
 (function (InfuraNetwork) {
-    InfuraNetwork[InfuraNetwork["Mainnet"] = 0] = "Mainnet";
-    InfuraNetwork[InfuraNetwork["Kovan"] = 1] = "Kovan";
-    InfuraNetwork[InfuraNetwork["Rinkeby"] = 2] = "Rinkeby";
-    InfuraNetwork[InfuraNetwork["Ropsten"] = 3] = "Ropsten";
+    InfuraNetwork["Mainnet"] = "mainnet";
+    InfuraNetwork["Kovan"] = "kovan";
+    InfuraNetwork["Rinkeby"] = "rinkeby";
+    InfuraNetwork["Ropsten"] = "ropsten";
 })(InfuraNetwork = exports.InfuraNetwork || (exports.InfuraNetwork = {}));

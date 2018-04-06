@@ -23,9 +23,9 @@ export declare class Web3Builder {
      * @param transactionManager The transaction manager
      * @param connection The rpc connection url
      */
-    setSignerAndConnection(transactionManager: TransactionManager, connection?: RpcConnection): Web3;
+    setSignerAndRpcConnection(transactionManager: TransactionManager, connection?: RpcConnection): Web3;
     /**
-     * Adds one or more addresses to the wallet
+     * Creates the web3 object
      *
      * @param signingSubprovider The signing subprovider
      * @param rpcSubprovider The rpc subprovider

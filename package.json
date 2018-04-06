@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "tsc -p tsconfig.test.json && mocha --require mock-local-storage dist-test/**/*.test.js",
-    "build": "tsc"
+    "build": "tsc",
+    "build-example": "tsc -p tsconfig.example.json && browserify ./dist-example/example/index.js > ./dist-example/bundle.js"
   },
   "keywords": [],
   "author": "Radar Relay <dev@radarrelay.com>",
@@ -14,6 +15,7 @@
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.46",
+    "browserify": "^16.1.1",
     "chai": "^3.5.0",
     "dotenv": "^4.0.0",
     "mocha": "^3.1.2",
