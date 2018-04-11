@@ -7,7 +7,7 @@
   "scripts": {
     "test": "tsc -p tsconfig.test.json && mocha --require mock-local-storage dist-test/**/*.test.js",
     "build": "tsc",
-    "build-example": "tsc -p tsconfig.example.json && browserify ./dist-example/example/index.js > ./dist-example/bundle.js"
+    "build-example": "tsc -p tsconfig.example.json && browserify ./dist-example/example/index.js | uglifyjs > ./dist-example/bundle.js"
   },
   "keywords": [],
   "author": "Radar Relay <dev@radarrelay.com>",
@@ -21,7 +21,8 @@
     "mocha": "^3.1.2",
     "tslint": "^5.8.0",
     "tslint-config-0xproject": "0.0.2",
-    "typescript": "^2.5.3"
+    "typescript": "^2.5.3",
+    "uglify-es": "^3.3.9"
   },
   "dependencies": {
     "@0xproject/assert": "^0.1.0",
