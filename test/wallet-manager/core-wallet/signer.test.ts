@@ -2,8 +2,8 @@ import * as mocha from 'mocha';
 import * as chai from 'chai';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError, PartialTxParams } from '../../../src/types';
-import { CoreWallet } from '../../../src/Wallets/CoreWallet';
-import { CoreSigner } from '../../../src/Signers/CoreSigner';
+import { CoreWallet } from '../../../src/wallets/CoreWallet';
+import { CoreSigner } from '../../../src/signers/CoreSigner';
 
 const expect = chai.expect;
 

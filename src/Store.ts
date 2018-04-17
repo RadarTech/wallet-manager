@@ -1,6 +1,6 @@
 import * as lightwallet from 'eth-lightwallet';
 import { keystore, signing } from 'eth-lightwallet';
-import { CoreWallet } from './Wallets/CoreWallet';
+import { CoreWallet } from './wallets/CoreWallet';
 
 export class Store {
 
