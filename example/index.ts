@@ -2,7 +2,7 @@ import { WalletManager } from "../src/WalletManager";
 import { Web3Builder } from '../src/Web3Builder';
 import { CoreTransactionManager } from "./TransactionManager";
 import { InfuraNetwork } from "../src/types";
-import { CoreWallet } from "../src/Wallets/CoreWallet";
+import { CoreWallet } from "../src/wallets/CoreWallet";
 import { promisify } from "@0xproject/utils";
 import { Web3 } from "./Web3";
 

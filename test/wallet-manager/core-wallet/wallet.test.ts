@@ -2,7 +2,7 @@ import * as mocha from 'mocha';
 import * as chai from 'chai';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError } from '../../../src/types';
-import { CoreWallet } from '../../../src/Wallets/CoreWallet';
+import { CoreWallet } from '../../../src/wallets/CoreWallet';
 
 const expect = chai.expect;
 
