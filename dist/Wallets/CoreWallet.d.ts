@@ -10,15 +10,15 @@ export declare class CoreWallet extends CoreBase implements Wallet {
     signer: CoreSigner;
     constructor(keystore: keystore, signing: signing, pwDerivedKey: Uint8Array);
     /**
-     * Adds one or more addresses to the wallet
+     * Adds one or more accounts to the wallet
      *
      */
-    addNewAddresses(numberOfAddresses?: number): void;
+    addNewAccounts(numberOfAccounts?: number): void;
     /**
-     * Gets all the addresses from the wallet
+     * Gets all the accounts from the wallet
      *
      */
-    getAddresses(): string[];
+    getAccounts(): string[];
     /**
      * Serialize the wallet keystore
      *
@@ -33,5 +33,5 @@ export declare class CoreWallet extends CoreBase implements Wallet {
      * Exports the private key for a single account
      *
      */
-    exportAccountPrivateKeyAsync(address: string, password: string): Promise<any>;
+    exportAccountPrivateKeyAsync(account: string, password: string): Promise<any>;
 }

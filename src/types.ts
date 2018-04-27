@@ -40,16 +40,18 @@ export interface JSONRPCPayload {
 }
 
 export interface Signer {
-  signPersonalMessageAsync(address: string, message: string): Promise<string>;
+  signPersonalMessageAsync(account: string, message: string): Promise<string>;
   signTransactionAsync(txParams: PartialTxParams): Promise<string>;
 }
 
 export interface Wallet {
   type: WalletType;
   signer: Signer;
+  getAccounts(): string[];
 }
 
 export interface TransactionManager {
+  getAccounts(): string[];
   signTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
   signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
 }

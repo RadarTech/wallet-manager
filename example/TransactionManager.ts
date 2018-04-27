@@ -1,19 +1,27 @@
 import * as _ from 'lodash';
 import { EventEmitter } from 'events';
-import { TransactionManager, Signer, PayloadType, PartialTxParams, UnsignedPayload, SigningError } from "../src/types";
+import { TransactionManager, Signer, PayloadType, PartialTxParams, UnsignedPayload, SigningError, Wallet } from "../src/types";
 import { promisify, BigNumber } from '@0xproject/utils';
 import { Web3 } from './Web3';
 import { UnsignedStack } from './UnsignedStack';
 
 export class CoreTransactionManager implements TransactionManager {
-  private _signer: Signer;
+  private _wallet: Wallet;
   private _unsignedStack: UnsignedStack;
 
-  constructor(signer: Signer) {
-    this._signer = signer;
+  constructor(wallet: Wallet) {
+    this._wallet = wallet;
     this._unsignedStack = new UnsignedStack();
 
     this.addClickEventListeners();
+  }
+
+ /**
+  * Get the first account from the connected wallet
+  * 
+  */
+  public getAccounts() {
+    return [this._wallet.getAccounts()[0]];
   }
 
  /**
@@ -91,7 +99,7 @@ export class CoreTransactionManager implements TransactionManager {
     const formattedPayload = this._unsignedStack.peek();
 
     // Sign the transaction
-    const signedTx = await this._signer.signTransactionAsync(formattedPayload.payload.params as PartialTxParams);
+    const signedTx = await this._wallet.signer.signTransactionAsync(formattedPayload.payload.params as PartialTxParams);
 
     formattedPayload.resolve(signedTx);
     this._unsignedStack.pop();
@@ -114,7 +122,7 @@ export class CoreTransactionManager implements TransactionManager {
     const formattedPayload = this._unsignedStack.peek();
 
     // Sign the message
-    const signedMsg = await this._signer.signPersonalMessageAsync(formattedPayload.payload.params.from, formattedPayload.payload.params.data);
+    const signedMsg = await this._wallet.signer.signPersonalMessageAsync(formattedPayload.payload.params.from, formattedPayload.payload.params.data);
 
     formattedPayload.resolve(signedMsg);
     this._unsignedStack.pop();

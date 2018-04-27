@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Web3 = require("web3");
 const types_1 = require("./types");
+const subproviders_1 = require("./subproviders");
 const constants_1 = require("./constants");
-const subproviders_1 = require("subproviders");
 const Web3ProviderEngine = require("web3-provider-engine");
 class Web3Builder {
     /**

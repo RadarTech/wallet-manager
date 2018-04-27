@@ -21,18 +21,18 @@ class CoreWallet extends CoreBase_1.CoreBase {
         this.signer = new CoreSigner_1.CoreSigner(keystore, signing, pwDerivedKey);
     }
     /**
-     * Adds one or more addresses to the wallet
+     * Adds one or more accounts to the wallet
      *
      */
-    addNewAddresses(numberOfAddresses = 1) {
-        this._keystore.generateNewAddress(this._pwDerivedKey, numberOfAddresses);
+    addNewAccounts(numberOfAccounts = 1) {
+        this._keystore.generateNewAddress(this._pwDerivedKey, numberOfAccounts);
         this.store.saveCoreWallet(this);
     }
     /**
-     * Gets all the addresses from the wallet
+     * Gets all the accounts from the wallet
      *
      */
-    getAddresses() {
+    getAccounts() {
         const accounts = this._keystore.getAddresses();
         return accounts;
     }
@@ -58,11 +58,11 @@ class CoreWallet extends CoreBase_1.CoreBase {
      * Exports the private key for a single account
      *
      */
-    exportAccountPrivateKeyAsync(address, password) {
+    exportAccountPrivateKeyAsync(account, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(this._keystore, password);
             this.validatePwDerivedKeyOrThrow(pwDerivedKey, this._keystore);
-            return this._keystore.exportPrivateKey(address, pwDerivedKey);
+            return this._keystore.exportPrivateKey(account, pwDerivedKey);
         });
     }
 }

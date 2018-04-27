@@ -8,10 +8,10 @@ export declare class CoreSigner implements Signer {
     /**
      * Sign a personal message
      *
-     * @param address The address to sign with
+     * @param account The account to sign with
      * @param message The message to sign
      */
-    signPersonalMessageAsync(address: string, message: string): Promise<string>;
+    signPersonalMessageAsync(account: string, message: string): Promise<string>;
     /**
      * Sign a transaction
      *

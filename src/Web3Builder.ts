@@ -1,13 +1,7 @@
 import * as Web3 from 'web3';
 import { WalletType, InfuraNetwork, WalletError, RpcConnection, TransactionManager } from "./types";
+import { SigningSubprovider, RedundantRPCSubprovider } from './subproviders';
 import { PUBLIC_RPC_PROVIDER_URLS } from './constants';
-import {
-  ledgerEthereumBrowserClientFactoryAsync as ledgerEthereumClientFactoryAsync,
-  LedgerSubproviderConfigs,
-  LedgerSubprovider,
-  RedundantRPCSubprovider,
-  SigningSubprovider
-} from 'subproviders';
 import Web3ProviderEngine = require('web3-provider-engine');
 
 export class Web3Builder {
@@ -75,7 +69,9 @@ export class Web3Builder {
     this.provider = new Web3ProviderEngine();
     this.provider.addProvider(signingSubprovider);
     this.provider.addProvider(rpcSubprovider);
-    this.provider.start();
+
+    // Hack: Unlock provider engine without block polling
+    (this.provider as any)._ready.go();
 
     // Set current subproviders
     this._currentSigningSubprovider = signingSubprovider;

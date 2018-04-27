@@ -22,19 +22,19 @@ export class CoreWallet extends CoreBase implements Wallet {
   }
 
  /**
-  * Adds one or more addresses to the wallet
+  * Adds one or more accounts to the wallet
   * 
   */
-  public addNewAddresses(numberOfAddresses: number = 1) {
-    this._keystore.generateNewAddress(this._pwDerivedKey, numberOfAddresses);
+  public addNewAccounts(numberOfAccounts: number = 1) {
+    this._keystore.generateNewAddress(this._pwDerivedKey, numberOfAccounts);
     this.store.saveCoreWallet(this);
   }
 
  /**
-  * Gets all the addresses from the wallet
+  * Gets all the accounts from the wallet
   * 
   */
-  public getAddresses(): string[] {
+  public getAccounts(): string[] {
     const accounts = this._keystore.getAddresses();
     return accounts;
   }
@@ -62,10 +62,10 @@ export class CoreWallet extends CoreBase implements Wallet {
   * Exports the private key for a single account
   * 
   */
-  public async exportAccountPrivateKeyAsync(address: string, password: string) {
+  public async exportAccountPrivateKeyAsync(account: string, password: string) {
     const pwDerivedKey: Uint8Array = await this.deriveKeyFromPasswordAsync(this._keystore, password);
     this.validatePwDerivedKeyOrThrow(pwDerivedKey, this._keystore);
 
-    return this._keystore.exportPrivateKey(address, pwDerivedKey);
+    return this._keystore.exportPrivateKey(account, pwDerivedKey);
   }
 }

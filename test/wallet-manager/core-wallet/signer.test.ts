@@ -12,7 +12,7 @@ describe('CoreSigner', () => {
     const seedPhrase = 'dilemma hollow outer pony cube season start stereo surprise when edit blast';
     const salt = 'kvODghzs7Ff1uqHyI0P3wI4Hso4w4iWT2e9qmrWz0y4';
     const password = 'supersecretpassword99';
-    const address = '0x44be42fd88e22387c43ba9b75941aa3e680dae25';
+    const account = '0x44be42fd88e22387c43ba9b75941aa3e680dae25';
     let signer: CoreSigner;
 
     before(async () => {
@@ -30,7 +30,7 @@ describe('CoreSigner', () => {
       const message = 'hello world';
 
       // Sign the message
-      const ecSignatureHex = await signer.signPersonalMessageAsync(address, message);
+      const ecSignatureHex = await signer.signPersonalMessageAsync(account, message);
 
       expect(ecSignatureHex).to.be.equal(
         '0xa46b696c1aa8f91dbb33d1a66f6440bf3cf334c9dc45dc389668c1e60e2db31e259400b41f31632fa994837054c5345c88dc455c13931332489029adee6fd24d1b',
@@ -44,7 +44,7 @@ describe('CoreSigner', () => {
         gasPrice: '0x00',
         nonce: '0x00',
         gas: '0x00',
-        from: address,
+        from: account,
         chainId: 42
       };
 
