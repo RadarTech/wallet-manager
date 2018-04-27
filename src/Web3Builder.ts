@@ -70,7 +70,7 @@ export class Web3Builder {
     this.provider.addProvider(signingSubprovider);
     this.provider.addProvider(rpcSubprovider);
 
-    // Hack: Unlock provider engine without block polling
+    // Unlock provider engine without block polling
     (this.provider as any)._ready.go();
 
     // Set current subproviders
