@@ -8,7 +8,7 @@ var PayloadType;
 })(PayloadType = exports.PayloadType || (exports.PayloadType = {}));
 var WalletError;
 (function (WalletError) {
-    WalletError["LocalStorageDisabled"] = "LOCAL_STORAGE_DISABLED";
+    WalletError["StorageDisabled"] = "STORAGE_DISABLED";
     WalletError["NoWalletFound"] = "NO_WALLET_FOUND";
     WalletError["InvalidSeed"] = "INVALID_SEED";
     WalletError["InvalidPassword"] = "INVALID_PASSWORD";

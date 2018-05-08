@@ -1,7 +1,10 @@
 import * as mocha from 'mocha';
 import * as chai from 'chai';
+import * as fs from 'fs';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError } from '../../../src/types';
+import { Store } from '../../../src/Store';
+import promisify from 'es6-promisify';
 
 const expect = chai.expect;
 
@@ -27,7 +30,7 @@ describe('CoreWalletManager', () => {
         expect(accounts.length).to.equal(1);
     });
 
-    it('can save and load the wallet from local storage', async () => {
+    it('can save and load the wallet from local storage or filesystem', async () => {
         const walletManager = new WalletManager();
         let coreWallet = await walletManager.core.createWalletAsync({ password });
 
@@ -66,8 +69,14 @@ describe('CoreWalletManager', () => {
     });
 
     it('throws the correct exception when no wallet is found', async () => {
+
         // Remove from local storage
-        localStorage.removeItem(localStorageKey);
+        if (Store.IsLocalStorageSupported) {
+          localStorage.removeItem(localStorageKey);
+        } else {
+          const fsUnlink = promisify(fs.unlink);
+          await fsUnlink('.' + localStorageKey);
+        }
 
         const walletManager = new WalletManager();
 
@@ -75,7 +84,7 @@ describe('CoreWalletManager', () => {
         try {
             // Attempt to retrieve a wallet that doesn't exist
             const coreWallet = await walletManager.core.loadWalletAsync(password);
-        } catch(err) {
+        } catch (err) {
             errorMessage = err.message;
         }
 

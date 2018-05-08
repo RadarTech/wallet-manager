@@ -20,7 +20,7 @@ export class CoreSigner implements Signer {
 
  /**
   * Sign a personal message
-  * 
+  *
   * @param account The account to sign with
   * @param message The message to sign
   */
