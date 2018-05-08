@@ -1,11 +1,18 @@
 import { CoreWallet } from './wallets/CoreWallet';
 export declare class Store {
     /**
+     * Check for any storage support
+     */
+    static IsStorageSupported(): boolean;
+    /**
      * Check if local storage is supported
      *
-     *
      */
-    isLocalStorageSupported(): boolean;
+    static IsLocalStorageSupported(): boolean;
+    /**
+     * Check if file storage is supported
+     */
+    static IsFileStorageSupported(): boolean;
     /**
      * Save the encrypted wallet in local storage
      *

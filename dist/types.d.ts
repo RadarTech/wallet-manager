@@ -33,14 +33,16 @@ export interface JSONRPCPayload {
     method: string;
 }
 export interface Signer {
-    signPersonalMessageAsync(address: string, message: string): Promise<string>;
+    signPersonalMessageAsync(account: string, message: string): Promise<string>;
     signTransactionAsync(txParams: PartialTxParams): Promise<string>;
 }
 export interface Wallet {
     type: WalletType;
     signer: Signer;
+    getAccounts(): string[];
 }
 export interface TransactionManager {
+    getAccounts(): string[];
     signTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
     signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
 }
@@ -50,7 +52,7 @@ export declare enum PayloadType {
     PersonalMsg = 2,
 }
 export declare enum WalletError {
-    LocalStorageDisabled = "LOCAL_STORAGE_DISABLED",
+    StorageDisabled = "STORAGE_DISABLED",
     NoWalletFound = "NO_WALLET_FOUND",
     InvalidSeed = "INVALID_SEED",
     InvalidPassword = "INVALID_PASSWORD",

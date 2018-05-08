@@ -17,24 +17,24 @@ describe('CoreWallet', () => {
     });
 
     it('can add a single account', async () => {
-      const preAddCount = coreWallet.getAddresses().length;
+      const preAddCount = coreWallet.getAccounts().length;
 
       // Add a new account
-      coreWallet.addNewAddresses(1);
+      coreWallet.addNewAccounts(1);
 
-      const numberOfAccountsAdded = coreWallet.getAddresses().length - preAddCount;
+      const numberOfAccountsAdded = coreWallet.getAccounts().length - preAddCount;
 
       // One account should have been added
       expect(numberOfAccountsAdded).to.equal(1);
     });
 
     it('can add a multiple accounts', async () => {
-      const preAddCount = coreWallet.getAddresses().length;
+      const preAddCount = coreWallet.getAccounts().length;
 
       // Add a new account
-      coreWallet.addNewAddresses(3);
+      coreWallet.addNewAccounts(3);
 
-      const numberOfAccountsAdded = coreWallet.getAddresses().length - preAddCount;
+      const numberOfAccountsAdded = coreWallet.getAccounts().length - preAddCount;
 
       // Three accounts should have been added
       expect(numberOfAccountsAdded).to.equal(3);
@@ -42,8 +42,8 @@ describe('CoreWallet', () => {
 
     it('can export the private key of an account', async () => {
       // Export the private key of the first account
-      const firstAddress = coreWallet.getAddresses()[0];
-      const privateKey = await coreWallet.exportAccountPrivateKeyAsync(firstAddress, password);
+      const firstAccount = coreWallet.getAccounts()[0];
+      const privateKey = await coreWallet.exportAccountPrivateKeyAsync(firstAccount, password);
 
       // Private key should be 64 chars long
       expect(privateKey.length).to.equal(64);
@@ -57,15 +57,15 @@ describe('CoreWallet', () => {
         expect(seedPhrase.split(' ').length).to.equal(12);
     });
 
-    it('can get all accounts (addresses)', async () => {
-      // Add new addresses
-      coreWallet.addNewAddresses(10);
+    it('can get all accounts', async () => {
+      // Add new accounts
+      coreWallet.addNewAccounts(10);
       
-      // Get all addresses
-      const addresses = coreWallet.getAddresses();
+      // Get all accounts
+      const accounts = coreWallet.getAccounts();
 
-      // There should be 11 addresses (Initial + 10 added)
-      expect(addresses.length).to.equal(11);
+      // There should be 11 accounts (Initial + 10 added)
+      expect(accounts.length).to.equal(11);
     });
 
     it('can serialize the wallet', async () => {

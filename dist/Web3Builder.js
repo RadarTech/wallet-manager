@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Web3 = require("web3");
 const types_1 = require("./types");
+const subproviders_1 = require("./subproviders");
 const constants_1 = require("./constants");
-const subproviders_1 = require("subproviders");
 const Web3ProviderEngine = require("web3-provider-engine");
 class Web3Builder {
     /**
@@ -54,7 +54,8 @@ class Web3Builder {
         this.provider = new Web3ProviderEngine();
         this.provider.addProvider(signingSubprovider);
         this.provider.addProvider(rpcSubprovider);
-        this.provider.start();
+        // Unlock provider engine without block polling
+        this.provider._ready.go();
         // Set current subproviders
         this._currentSigningSubprovider = signingSubprovider;
         this._currentRpcSubprovider = rpcSubprovider;

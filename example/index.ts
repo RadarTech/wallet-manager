@@ -29,7 +29,7 @@ w.createNewCoreWalletAsync = async function()  {
   wallet = await walletManager.core.createWalletAsync({ password: 'supersecretpassword99' });
   
   // Display active address
-  activeAddressSpan.innerHTML = wallet.getAddresses()[0];
+  activeAddressSpan.innerHTML = wallet.getAccounts()[0];
 
   // Enable Web3 Button
   initWeb3Button.disabled = false;
@@ -44,7 +44,7 @@ w.initializeWeb3 = function() {
   const web3Builder = new Web3Builder();
 
   // Instantiate the TransactionManager. Pass the core wallet instance into the constructor.
-  const transactionManager = new CoreTransactionManager(wallet.signer);
+  const transactionManager = new CoreTransactionManager(wallet);
 
   // Create the web3 object
   Web3.Instance = web3Builder.setSignerAndRpcConnection(transactionManager, InfuraNetwork.Kovan);
@@ -62,7 +62,7 @@ w.initializeWeb3 = function() {
 w.callWeb3Sign = async function() {
   try {
     const web3 = Web3.Instance;
-    const signedMsg = await promisify(web3.eth.sign)(wallet.getAddresses()[0], 'hello world');
+    const signedMsg = await promisify(web3.eth.sign)(wallet.getAccounts()[0], 'hello world');
     history.push(signedMsg);
   } catch (err) {
     history.push(err);
@@ -78,7 +78,7 @@ w.callWeb3SendTransaction = async function() {
   try {
     const web3 = Web3.Instance;
     const signedTx = await promisify(web3.eth.sendTransaction)({
-      from: wallet.getAddresses()[0],
+      from: wallet.getAccounts()[0],
       to: '0x000000000000000000000000000000000000dEaD',
       value: '1000000000000000', // 0.001 ETH
     });

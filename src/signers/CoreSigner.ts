@@ -20,14 +20,14 @@ export class CoreSigner implements Signer {
 
  /**
   * Sign a personal message
-  * 
-  * @param address The address to sign with
+  *
+  * @param account The account to sign with
   * @param message The message to sign
   */
-  public async signPersonalMessageAsync(address: string, message: string): Promise<string> {
+  public async signPersonalMessageAsync(account: string, message: string): Promise<string> {
     try {
       const result: ECSignatureBuffer = await this._signing.signMsg(
-        this._keystore, this._pwDerivedKey, message, address, this._keystore.hdPathString);
+        this._keystore, this._pwDerivedKey, message, account, this._keystore.hdPathString);
 
       const signature = this._signing.concatSig(result);
 

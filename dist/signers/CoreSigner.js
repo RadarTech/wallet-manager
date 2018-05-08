@@ -18,13 +18,13 @@ class CoreSigner {
     /**
      * Sign a personal message
      *
-     * @param address The address to sign with
+     * @param account The account to sign with
      * @param message The message to sign
      */
-    signPersonalMessageAsync(address, message) {
+    signPersonalMessageAsync(account, message) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const result = yield this._signing.signMsg(this._keystore, this._pwDerivedKey, message, address, this._keystore.hdPathString);
+                const result = yield this._signing.signMsg(this._keystore, this._pwDerivedKey, message, account, this._keystore.hdPathString);
                 const signature = this._signing.concatSig(result);
                 return signature;
             }

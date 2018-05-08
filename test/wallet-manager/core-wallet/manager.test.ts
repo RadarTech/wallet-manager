@@ -1,7 +1,10 @@
 import * as mocha from 'mocha';
 import * as chai from 'chai';
+import * as fs from 'fs';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError } from '../../../src/types';
+import { Store } from '../../../src/Store';
+import promisify from 'es6-promisify';
 
 const expect = chai.expect;
 
@@ -17,17 +20,17 @@ describe('CoreWalletManager', () => {
         // Export the seed phrase
         const seedPhrase = await coreWallet.exportSeedPhraseAsync(password);
 
-        // Get Wallet Addresses
-        const addresses = coreWallet.getAddresses();
+        // Get Wallet Accounts
+        const accounts = coreWallet.getAccounts();
 
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
 
-        // Wallet should contain 1 address
-        expect(addresses.length).to.equal(1);
+        // Wallet should contain 1 account
+        expect(accounts.length).to.equal(1);
     });
 
-    it('can save and load the wallet from local storage', async () => {
+    it('can save and load the wallet from local storage or filesystem', async () => {
         const walletManager = new WalletManager();
         let coreWallet = await walletManager.core.createWalletAsync({ password });
 
@@ -40,14 +43,14 @@ describe('CoreWalletManager', () => {
         // Export the seed phrase
         const seedPhrase = await coreWallet.exportSeedPhraseAsync(password);
 
-        // Get Wallet Addresses
-        const addresses = coreWallet.getAddresses();
+        // Get Wallet Accounts
+        const accounts = coreWallet.getAccounts();
 
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
 
-        // Wallet should contain 1 address
-        expect(addresses.length).to.equal(1);
+        // Wallet should contain 1 account
+        expect(accounts.length).to.equal(1);
     });
 
     it('throws the correct exception when the supplied password is incorrect', async () => {
@@ -66,8 +69,14 @@ describe('CoreWalletManager', () => {
     });
 
     it('throws the correct exception when no wallet is found', async () => {
+
         // Remove from local storage
-        localStorage.removeItem(localStorageKey);
+        if (Store.IsLocalStorageSupported) {
+          localStorage.removeItem(localStorageKey);
+        } else {
+          const fsUnlink = promisify(fs.unlink);
+          await fsUnlink('.' + localStorageKey);
+        }
 
         const walletManager = new WalletManager();
 
@@ -75,7 +84,7 @@ describe('CoreWalletManager', () => {
         try {
             // Attempt to retrieve a wallet that doesn't exist
             const coreWallet = await walletManager.core.loadWalletAsync(password);
-        } catch(err) {
+        } catch (err) {
             errorMessage = err.message;
         }
 
