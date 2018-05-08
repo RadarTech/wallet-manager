@@ -70,7 +70,7 @@ Exports the wallet's seed phrase.
 
 Gets all the accounts from the wallet.
 
-#### `coreWallet.serialize(): void`
+#### `coreWallet.serialize(): string`
 
 Serialize the core wallet instance.
 
