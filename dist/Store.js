@@ -34,8 +34,8 @@ class Store {
         if (typeof fs.writeFileSync === 'undefined')
             return false;
         try {
-            fs.writeFileSync('.radar-core-wallet', 'test');
-            fs.unlinkSync('.radar-core-wallet');
+            fs.writeFileSync('.fsSupportTest', 'test');
+            fs.unlinkSync('.fsSupportTest');
             return true;
         }
         catch (err) {
@@ -53,7 +53,6 @@ class Store {
             localStorage.setItem(keyName, wallet.serialize());
         }
         else if (Store.IsFileStorageSupported) {
-            console.log('storing via file');
             fs.writeFileSync('.' + keyName, wallet.serialize());
         }
         else {
