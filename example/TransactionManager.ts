@@ -5,6 +5,10 @@ import { promisify, BigNumber } from '@0xproject/utils';
 import { Web3 } from './Web3';
 import { UnsignedStack } from './UnsignedStack';
 
+// getAccounts(): string[];
+// signTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
+// signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
+
 export class CoreTransactionManager implements TransactionManager {
   private _wallet: Wallet;
   private _unsignedStack: UnsignedStack;

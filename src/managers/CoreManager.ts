@@ -17,7 +17,7 @@ export class CoreManager extends CoreBase {
   public async createWalletAsync(options: CoreWalletOptions): Promise<CoreWallet> {
     const filledOptions = this.populateMissingOptions(options);
 
-    this.throwOnError(WalletError.LocalStorageDisabled);
+    this.throwOnError(WalletError.StorageDisabled);
     this.validateSeedPhraseOrThrow(options.seedPhrase);
     
     const keystore: keystore = await this.initializeKeystoreAsync(filledOptions);
@@ -45,7 +45,6 @@ export class CoreManager extends CoreBase {
    */
   public async loadWalletAsync(password: string): Promise<CoreWallet> {
     const keystore = this.store.loadCoreWallet();
-
     if (!keystore) {
       throw new Error(WalletError.NoWalletFound);
     }
@@ -93,8 +92,8 @@ export class CoreManager extends CoreBase {
   private throwOnError(...errors: WalletError[]) {
     for (let i = 0; i < errors.length; i++) {
       switch (errors[i]) {
-        case WalletError.LocalStorageDisabled:
-          if (!this.store.isLocalStorageSupported()) throw new Error(WalletError.LocalStorageDisabled);
+        case WalletError.StorageDisabled:
+          if (!Store.IsStorageSupported()) throw new Error(WalletError.StorageDisabled);
         break;
       }
     }

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const lightwallet = require("eth-lightwallet");
 const _ = require("lodash");
+const Store_1 = require("../Store");
 const types_1 = require("../types");
 const constants_1 = require("../constants");
 const CoreWallet_1 = require("../wallets/CoreWallet");
@@ -23,7 +24,7 @@ class CoreManager extends CoreBase_1.CoreBase {
     createWalletAsync(options) {
         return __awaiter(this, void 0, void 0, function* () {
             const filledOptions = this.populateMissingOptions(options);
-            this.throwOnError(types_1.WalletError.LocalStorageDisabled);
+            this.throwOnError(types_1.WalletError.StorageDisabled);
             this.validateSeedPhraseOrThrow(options.seedPhrase);
             const keystore = yield this.initializeKeystoreAsync(filledOptions);
             const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(keystore, options.password);
@@ -94,9 +95,9 @@ class CoreManager extends CoreBase_1.CoreBase {
     throwOnError(...errors) {
         for (let i = 0; i < errors.length; i++) {
             switch (errors[i]) {
-                case types_1.WalletError.LocalStorageDisabled:
-                    if (!this.store.isLocalStorageSupported())
-                        throw new Error(types_1.WalletError.LocalStorageDisabled);
+                case types_1.WalletError.StorageDisabled:
+                    if (!Store_1.Store.IsStorageSupported())
+                        throw new Error(types_1.WalletError.StorageDisabled);
                     break;
             }
         }

@@ -52,7 +52,7 @@ export declare enum PayloadType {
     PersonalMsg = 2,
 }
 export declare enum WalletError {
-    LocalStorageDisabled = "LOCAL_STORAGE_DISABLED",
+    StorageDisabled = "STORAGE_DISABLED",
     NoWalletFound = "NO_WALLET_FOUND",
     InvalidSeed = "INVALID_SEED",
     InvalidPassword = "INVALID_PASSWORD",
