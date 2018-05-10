@@ -41,6 +41,7 @@ export interface JSONRPCPayload {
 
 export interface Signer {
   signPersonalMessageAsync(account: string, message: string): Promise<string>;
+  signPersonalMessageHashAsync(account: string, hash: string): Promise<string>;
   signTransactionAsync(txParams: PartialTxParams): Promise<string>;
 }
 

@@ -16,6 +16,24 @@ class CoreSigner {
         this._pwDerivedKey = pwDerivedKey;
     }
     /**
+     * Sign a personal message hash
+     *
+     * @param account The account to sign with
+     * @param hash The hash to sign
+     */
+    signPersonalMessageHashAsync(account, hash) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this._signing.signMsgHash(this._keystore, this._pwDerivedKey, hash, account, this._keystore.hdPathString);
+                const signature = this._signing.concatSig(result);
+                return signature;
+            }
+            catch (err) {
+                throw err;
+            }
+        });
+    }
+    /**
      * Sign a personal message
      *
      * @param account The account to sign with
