@@ -11,6 +11,7 @@
   },
   "keywords": [],
   "author": "Radar Relay <dev@radarrelay.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
