@@ -7,6 +7,7 @@ import Web3ProviderEngine = require('web3-provider-engine');
 export class Web3Builder {
   private _currentSigningSubprovider;
   private _currentRpcSubprovider;
+  private _additionalSubproviders: any[] = [];
   public provider: Web3ProviderEngine;
 
   /**
@@ -20,7 +21,7 @@ export class Web3Builder {
     }
 
     const signingSubprovider = new SigningSubprovider(transactionManager);
-    return this.createWeb3Object(signingSubprovider, this._currentRpcSubprovider);
+    return this.createWeb3Object(signingSubprovider, this._currentRpcSubprovider, this._additionalSubproviders);
   }
 
   /**
@@ -37,7 +38,7 @@ export class Web3Builder {
       PUBLIC_RPC_PROVIDER_URLS(connection)
     );
 
-    return this.createWeb3Object(this._currentSigningSubprovider, rpcSubprovider);
+    return this.createWeb3Object(this._currentSigningSubprovider, rpcSubprovider, this._additionalSubproviders);
   }
 
   /**
@@ -90,6 +91,7 @@ export class Web3Builder {
     // Set current subproviders
     this._currentSigningSubprovider = signingSubprovider;
     this._currentRpcSubprovider = rpcSubprovider;
+    this._additionalSubproviders = additionalSubproviders;
 
     return new Web3(this.provider);
   }

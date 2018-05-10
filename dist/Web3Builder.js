@@ -6,6 +6,9 @@ const subproviders_1 = require("./subproviders");
 const constants_1 = require("./constants");
 const Web3ProviderEngine = require("web3-provider-engine");
 class Web3Builder {
+    constructor() {
+        this._additionalSubproviders = [];
+    }
     /**
      * Sets the transaction signer
      *
@@ -16,7 +19,7 @@ class Web3Builder {
             this.provider.stop();
         }
         const signingSubprovider = new subproviders_1.SigningSubprovider(transactionManager);
-        return this.createWeb3Object(signingSubprovider, this._currentRpcSubprovider);
+        return this.createWeb3Object(signingSubprovider, this._currentRpcSubprovider, this._additionalSubproviders);
     }
     /**
      * Set the rpc connection
@@ -28,7 +31,7 @@ class Web3Builder {
             this.provider.stop();
         }
         const rpcSubprovider = new subproviders_1.RedundantRPCSubprovider(constants_1.PUBLIC_RPC_PROVIDER_URLS(connection));
-        return this.createWeb3Object(this._currentSigningSubprovider, rpcSubprovider);
+        return this.createWeb3Object(this._currentSigningSubprovider, rpcSubprovider, this._additionalSubproviders);
     }
     /**
      * Sets both the signer and rpc connection
@@ -63,6 +66,7 @@ class Web3Builder {
         // Set current subproviders
         this._currentSigningSubprovider = signingSubprovider;
         this._currentRpcSubprovider = rpcSubprovider;
+        this._additionalSubproviders = additionalSubproviders;
         return new Web3(this.provider);
     }
 }

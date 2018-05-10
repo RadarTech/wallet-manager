@@ -4,6 +4,7 @@ import Web3ProviderEngine = require('web3-provider-engine');
 export declare class Web3Builder {
     private _currentSigningSubprovider;
     private _currentRpcSubprovider;
+    private _additionalSubproviders;
     provider: Web3ProviderEngine;
     /**
      * Sets the transaction signer
