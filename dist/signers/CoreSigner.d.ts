@@ -6,6 +6,13 @@ export declare class CoreSigner implements Signer {
     private _pwDerivedKey;
     constructor(keystore: lightwallet.keystore, signing: lightwallet.signing, pwDerivedKey: Uint8Array);
     /**
+     * Sign a personal message hash
+     *
+     * @param account The account to sign with
+     * @param hash The hash to sign
+     */
+    signPersonalMessageHashAsync(account: string, hash: string): Promise<string>;
+    /**
      * Sign a personal message
      *
      * @param account The account to sign with

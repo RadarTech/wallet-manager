@@ -18,6 +18,25 @@ export class CoreSigner implements Signer {
     this._pwDerivedKey = pwDerivedKey;
   }
 
+  /**
+   * Sign a personal message hash
+   *
+   * @param account The account to sign with
+   * @param hash The hash to sign
+   */
+   public async signPersonalMessageHashAsync(account: string, hash: string): Promise<string> {
+     try {
+       const result: ECSignatureBuffer = await this._signing.signMsgHash(
+         this._keystore, this._pwDerivedKey, hash, account, this._keystore.hdPathString);
+
+       const signature = this._signing.concatSig(result);
+
+       return signature;
+     } catch (err) {
+       throw err;
+     }
+   }
+
  /**
   * Sign a personal message
   *
