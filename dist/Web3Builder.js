@@ -15,9 +15,6 @@ class Web3Builder {
      * @param transactionManager The transaction manager
      */
     setSigner(transactionManager) {
-        if (this.provider !== undefined) {
-            this.provider.stop();
-        }
         const signingSubprovider = new subproviders_1.SigningSubprovider(transactionManager);
         return this.createWeb3Object(signingSubprovider, this._currentRpcSubprovider, this._additionalSubproviders);
     }
@@ -27,9 +24,6 @@ class Web3Builder {
      * @param connection The rpc connection url
      */
     setRpcConnection(connection) {
-        if (this.provider !== undefined) {
-            this.provider.stop();
-        }
         const rpcSubprovider = new subproviders_1.RedundantRPCSubprovider(constants_1.PUBLIC_RPC_PROVIDER_URLS(connection));
         return this.createWeb3Object(this._currentSigningSubprovider, rpcSubprovider, this._additionalSubproviders);
     }
