@@ -53,11 +53,11 @@ class Web3Builder {
      */
     createWeb3Object(signingSubprovider, rpcSubprovider, additionalSubproviders) {
         this.provider = new Web3ProviderEngine();
-        this.provider.addProvider(rpcSubprovider);
-        this.provider.addProvider(signingSubprovider);
         for (const subprovider of additionalSubproviders) {
             this.provider.addProvider(subprovider);
         }
+        this.provider.addProvider(signingSubprovider);
+        this.provider.addProvider(rpcSubprovider);
         // Unlock provider engine without block polling
         this.provider._ready.go();
         // Set current subproviders
