@@ -1,6 +1,6 @@
 {
   "name": "vault-manager",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A library that simplifies wallet & web3 creation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
