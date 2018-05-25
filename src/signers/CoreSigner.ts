@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import * as Web3 from 'web3';
 import * as EthereumTx from 'ethereumjs-tx';
 import * as lightwallet from 'eth-lightwallet';
-import * as promisify from 'es6-promisify';
 import Semaphore from 'semaphore-async-await';
 import { assert } from '@0xproject/assert';
 import { ECSignatureBuffer, PartialTxParams, JSONRPCPayload, Signer } from '../types';
@@ -21,8 +20,8 @@ export class CoreSigner implements Signer {
   /**
    * Sign a personal message hash
    *
-   * @param account The account to sign with
-   * @param hash The hash to sign
+   * @param {string} account The account to sign with
+   * @param {string} hash The hash to sign
    */
    public async signPersonalMessageHashAsync(account: string, hash: string): Promise<string> {
      try {
@@ -40,8 +39,8 @@ export class CoreSigner implements Signer {
  /**
   * Sign a personal message
   *
-  * @param account The account to sign with
-  * @param message The message to sign
+  * @param {string} account The account to sign with
+  * @param {string} message The message to sign
   */
   public async signPersonalMessageAsync(account: string, message: string): Promise<string> {
     try {
@@ -58,8 +57,8 @@ export class CoreSigner implements Signer {
 
  /**
   * Sign a transaction
-  * 
-  * @param txParams The transaction parameters
+  *
+  * @param {PartialTxParams} txParams The transaction parameters
   */
   public async signTransactionAsync(txParams: PartialTxParams): Promise<string> {
     try {
@@ -67,9 +66,9 @@ export class CoreSigner implements Signer {
       const txHex = tx.serialize().toString('hex');
       let signedTxHex: string = this._signing.signTx(
         this._keystore, this._pwDerivedKey, txHex, txParams.from, this._keystore.hdPathString);
-        
+
       signedTxHex = `0x${signedTxHex}`;
-      
+
       return signedTxHex;
     } catch (err) {
       throw err;

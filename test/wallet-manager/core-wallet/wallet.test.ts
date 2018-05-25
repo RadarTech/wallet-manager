@@ -60,7 +60,7 @@ describe('CoreWallet', () => {
     it('can get all accounts', async () => {
       // Add new accounts
       coreWallet.addNewAccounts(10);
-      
+
       // Get all accounts
       const accounts = coreWallet.getAccounts();
 
@@ -73,6 +73,6 @@ describe('CoreWallet', () => {
       const serializedWallet = coreWallet.serialize();
 
       // Serialized wallet should be a string
-      expect(typeof serializedWallet).to.equal('string')
+      expect(typeof serializedWallet).to.equal('string');
     });
 });

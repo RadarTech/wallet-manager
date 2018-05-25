@@ -23,6 +23,7 @@ class CoreWallet extends CoreBase_1.CoreBase {
     /**
      * Adds one or more accounts to the wallet
      *
+     * @param {number} [numberOfAccounts=1] The number of accounts to add
      */
     addNewAccounts(numberOfAccounts = 1) {
         this._keystore.generateNewAddress(this._pwDerivedKey, numberOfAccounts);
@@ -46,6 +47,7 @@ class CoreWallet extends CoreBase_1.CoreBase {
     /**
      * Exports the wallet's seed phrase
      *
+     * @param {string} password The plaintext password
      */
     exportSeedPhraseAsync(password) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -57,6 +59,8 @@ class CoreWallet extends CoreBase_1.CoreBase {
     /**
      * Exports the private key for a single account
      *
+     * @param {string} account The account used for the export
+     * @param {string} password The plaintext password
      */
     exportAccountPrivateKeyAsync(account, password) {
         return __awaiter(this, void 0, void 0, function* () {

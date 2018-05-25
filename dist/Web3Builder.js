@@ -12,7 +12,7 @@ class Web3Builder {
     /**
      * Sets the transaction signer
      *
-     * @param transactionManager The transaction manager
+     * @param {TransactionManager} transactionManager The transaction manager
      */
     setSigner(transactionManager) {
         const signingSubprovider = new subproviders_1.SigningSubprovider(transactionManager);
@@ -21,7 +21,7 @@ class Web3Builder {
     /**
      * Set the rpc connection
      *
-     * @param connection The rpc connection url
+     * @param {RpcConnection} connection The rpc connection url
      */
     setRpcConnection(connection) {
         const rpcSubprovider = new subproviders_1.RedundantRPCSubprovider(constants_1.PUBLIC_RPC_PROVIDER_URLS(connection));
@@ -30,9 +30,9 @@ class Web3Builder {
     /**
      * Sets both the signer and rpc connection
      *
-     * @param transactionManager The transaction manager
-     * @param connection The rpc connection url
-     * @param subproviders Optional additional subproviders
+     * @param {TransactionManager} transactionManager The transaction manager
+     * @param {RpcConnection} [connection=InfuraNetwork.Mainnet] The rpc connection url
+     * @param {any[]} [subproviders] Optional additional subproviders
      */
     setSignerAndRpcConnection(transactionManager, connection = types_1.InfuraNetwork.Mainnet, ...subproviders) {
         if (this.provider !== undefined) {
@@ -45,8 +45,9 @@ class Web3Builder {
     /**
      * Creates the web3 object
      *
-     * @param signingSubprovider The signing subprovider
-     * @param rpcSubprovider The rpc subprovider
+     * @param {SigningSubprovider} signingSubprovider The signing subprovider
+     * @param {RedundantRPCSubprovider} rpcSubprovider The rpc subprovider
+     * @param {any[]} [additionalSubproviders] Additional subproviders
      */
     createWeb3Object(signingSubprovider, rpcSubprovider, additionalSubproviders) {
         this.provider = new Web3ProviderEngine();

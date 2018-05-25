@@ -1,6 +1,5 @@
 import * as lightwallet from 'eth-lightwallet';
 import * as _ from 'lodash';
-import { keystore } from 'eth-lightwallet';
 import { Store } from '../Store';
 import { CoreWalletOptions, WalletError, Wallet, WalletType } from '../types';
 import { DEFAULT_DERIVATION_PATH } from '../constants';
@@ -11,7 +10,7 @@ export class CoreManager extends CoreBase {
 
   /**
    * Creates a new core wallet and saves it in local storage
-   * 
+   *
    * @param options CoreWallet initialization options
    */
   public async createWalletAsync(options: CoreWalletOptions): Promise<CoreWallet> {
@@ -19,8 +18,8 @@ export class CoreManager extends CoreBase {
 
     this.throwOnError(WalletError.StorageDisabled);
     this.validateSeedPhraseOrThrow(options.seedPhrase);
-    
-    const keystore: keystore = await this.initializeKeystoreAsync(filledOptions);
+
+    const keystore: lightwallet.keystore = await this.initializeKeystoreAsync(filledOptions);
     const pwDerivedKey: Uint8Array = await this.deriveKeyFromPasswordAsync(keystore, options.password);
 
     keystore.generateNewAddress(pwDerivedKey, 1);
@@ -32,7 +31,8 @@ export class CoreManager extends CoreBase {
 
   /**
    * Save the wallet
-   * 
+   *
+   * @param {CoreWallet} wallet The wallet instance
    */
   public saveWallet(wallet: CoreWallet): void {
     if (wallet) this.store.saveCoreWallet(wallet);
@@ -40,8 +40,8 @@ export class CoreManager extends CoreBase {
 
   /**
    * Loads a wallet from local storage
-   * 
-   * @param password The plaintext password
+   *
+   * @param {string} password The plaintext password
    */
   public async loadWalletAsync(password: string): Promise<CoreWallet> {
     const keystore = this.store.loadCoreWallet();
@@ -57,11 +57,11 @@ export class CoreManager extends CoreBase {
 
   /**
    * Initializes a new eth-lightwallet keystore
-   * 
-   * @param options CoreWallet initialization options
+   *
+   * @param {CoreWalletOptions} options CoreWallet initialization options
    */
-  private async initializeKeystoreAsync(options: CoreWalletOptions): Promise<keystore> {
-    return new Promise<keystore>((resolve) => {
+  private async initializeKeystoreAsync(options: CoreWalletOptions): Promise<lightwallet.keystore> {
+    return new Promise<lightwallet.keystore>(resolve => {
       // Create CoreWallet
       lightwallet.keystore.createVault(options, (err, keystore) => {
           resolve(keystore);
@@ -71,8 +71,8 @@ export class CoreManager extends CoreBase {
 
   /**
    * Populate the missing wallet options
-   * 
-   * @param options CoreWallet initialization options
+   *
+   * @param {CoreWalletOptions} options CoreWallet initialization options
    */
   private populateMissingOptions(options: CoreWalletOptions): CoreWalletOptions {
     if (_.isUndefined(options.hdPathString)) {
@@ -86,12 +86,12 @@ export class CoreManager extends CoreBase {
 
   /**
    * Throw the appropriate exception on error
-   * 
-   * @param errors An array of possible WalletErrors
+   *
+   * @param {WalletError[]} errors An array of possible WalletErrors
    */
   private throwOnError(...errors: WalletError[]) {
-    for (let i = 0; i < errors.length; i++) {
-      switch (errors[i]) {
+    for (const error of errors) {
+      switch (error) {
         case WalletError.StorageDisabled:
           if (!Store.IsStorageSupported()) throw new Error(WalletError.StorageDisabled);
         break;
@@ -101,10 +101,10 @@ export class CoreManager extends CoreBase {
 
   /**
    * Validate the seed or throw an InvalidSeed exception
-   * 
-   * @param seed The seed to validate
+   *
+   * @param {string} seed The seed to validate
    */
-  private validateSeedPhraseOrThrow(seed: string) {
+  private validateSeedPhraseOrThrow(seed: string): void {
     const valid = lightwallet.keystore.isSeedValid(seed);
 
     if (!valid) {

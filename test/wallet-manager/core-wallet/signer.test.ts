@@ -18,9 +18,9 @@ describe('CoreSigner', () => {
     before(async () => {
       const walletManager = new WalletManager();
       const options = {
-        password: password,
-        seedPhrase: seedPhrase,
-        salt: salt,
+        password,
+        seedPhrase,
+        salt,
         hdPathString: `m/44'/60'/0'`
       };
       signer = (await walletManager.core.createWalletAsync(options)).signer;
@@ -33,6 +33,7 @@ describe('CoreSigner', () => {
       const ecSignatureHex = await signer.signPersonalMessageAsync(account, message);
 
       expect(ecSignatureHex).to.be.equal(
+        // tslint:disable-next-line:max-line-length
         '0xa46b696c1aa8f91dbb33d1a66f6440bf3cf334c9dc45dc389668c1e60e2db31e259400b41f31632fa994837054c5345c88dc455c13931332489029adee6fd24d1b',
       );
     });

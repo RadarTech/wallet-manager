@@ -16,14 +16,14 @@ export declare class Store {
     /**
      * Save the encrypted wallet in local storage
      *
-     * @param wallet The wallet to save
-     * @param keyName The key identifier
+     * @param {CoreWallet} wallet The wallet to save
+     * @param {string} [keyName='radar-core-wallet'] The key identifier
      */
     saveCoreWallet(wallet: CoreWallet, keyName?: string): boolean;
     /**
      * Load the encrypted wallet from local storage
      *
-     * @param keyName The key identifier
+     * @param {string} [keyName='radar-core-wallet']  The key identifier
      */
     loadCoreWallet(keyName?: string): any;
 }
