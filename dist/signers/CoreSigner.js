@@ -18,8 +18,8 @@ class CoreSigner {
     /**
      * Sign a personal message hash
      *
-     * @param account The account to sign with
-     * @param hash The hash to sign
+     * @param {string} account The account to sign with
+     * @param {string} hash The hash to sign
      */
     signPersonalMessageHashAsync(account, hash) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -36,8 +36,8 @@ class CoreSigner {
     /**
      * Sign a personal message
      *
-     * @param account The account to sign with
-     * @param message The message to sign
+     * @param {string} account The account to sign with
+     * @param {string} message The message to sign
      */
     signPersonalMessageAsync(account, message) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -54,7 +54,7 @@ class CoreSigner {
     /**
      * Sign a transaction
      *
-     * @param txParams The transaction parameters
+     * @param {PartialTxParams} txParams The transaction parameters
      */
     signTransactionAsync(txParams) {
         return __awaiter(this, void 0, void 0, function* () {

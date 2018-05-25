@@ -11,36 +11,37 @@ export declare class CoreManager extends CoreBase {
     /**
      * Save the wallet
      *
+     * @param {CoreWallet} wallet The wallet instance
      */
     saveWallet(wallet: CoreWallet): void;
     /**
      * Loads a wallet from local storage
      *
-     * @param password The plaintext password
+     * @param {string} password The plaintext password
      */
     loadWalletAsync(password: string): Promise<CoreWallet>;
     /**
      * Initializes a new eth-lightwallet keystore
      *
-     * @param options CoreWallet initialization options
+     * @param {CoreWalletOptions} options CoreWallet initialization options
      */
     private initializeKeystoreAsync(options);
     /**
      * Populate the missing wallet options
      *
-     * @param options CoreWallet initialization options
+     * @param {CoreWalletOptions} options CoreWallet initialization options
      */
     private populateMissingOptions(options);
     /**
      * Throw the appropriate exception on error
      *
-     * @param errors An array of possible WalletErrors
+     * @param {WalletError[]} errors An array of possible WalletErrors
      */
     private throwOnError(...errors);
     /**
      * Validate the seed or throw an InvalidSeed exception
      *
-     * @param seed The seed to validate
+     * @param {string} seed The seed to validate
      */
     private validateSeedPhraseOrThrow(seed);
 }

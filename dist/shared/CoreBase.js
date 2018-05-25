@@ -17,12 +17,12 @@ class CoreBase {
     /**
      * Derives a symmetric key from the plaintext password and salt
      *
-     * @param keystore The wallet's keystore instance
-     * @param password The plaintext password
+     * @param {keystore} keystore The wallet's keystore instance
+     * @param {string} password The plaintext password
      */
     deriveKeyFromPasswordAsync(keystore, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 keystore.keyFromPassword(password, (err, pwDerivedKey) => {
                     resolve(pwDerivedKey);
                 });
@@ -32,7 +32,8 @@ class CoreBase {
     /**
      * Validate the pwDerivedKey or throw an InvalidPassword exception
      *
-     * @param pwDerivedKey The password derived symmetric key
+     * @param {Uint8Array} pwDerivedKey The password derived symmetric key
+     * @param {keystore} keystore The lightwallet keystore
      */
     validatePwDerivedKeyOrThrow(pwDerivedKey, keystore) {
         const valid = keystore.isDerivedKeyCorrect(pwDerivedKey);

@@ -1,5 +1,5 @@
 import {promisify} from '@0xproject/utils';
-import Web3 from 'web3';
+import * as Web3 from 'web3';
 
 import {
     JSONRPCPayload,

@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError } from '../../../src/types';
 import { Store } from '../../../src/Store';
-import promisify from 'es6-promisify';
+import { promisify } from '@0xproject/utils';
 
 const expect = chai.expect;
 
@@ -61,7 +61,7 @@ describe('CoreWalletManager', () => {
         try {
             // Attempt to load the wallet with an incorrect password
             const coreWallet = await walletManager.core.loadWalletAsync(incorrectPassword);
-        } catch(err) {
+        } catch (err) {
             errorMessage = err.message;
         }
 

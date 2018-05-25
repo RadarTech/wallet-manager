@@ -37,6 +37,7 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Save the wallet
      *
+     * @param {CoreWallet} wallet The wallet instance
      */
     saveWallet(wallet) {
         if (wallet)
@@ -45,7 +46,7 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Loads a wallet from local storage
      *
-     * @param password The plaintext password
+     * @param {string} password The plaintext password
      */
     loadWalletAsync(password) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,11 +62,11 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Initializes a new eth-lightwallet keystore
      *
-     * @param options CoreWallet initialization options
+     * @param {CoreWalletOptions} options CoreWallet initialization options
      */
     initializeKeystoreAsync(options) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve) => {
+            return new Promise(resolve => {
                 // Create CoreWallet
                 lightwallet.keystore.createVault(options, (err, keystore) => {
                     resolve(keystore);
@@ -76,7 +77,7 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Populate the missing wallet options
      *
-     * @param options CoreWallet initialization options
+     * @param {CoreWalletOptions} options CoreWallet initialization options
      */
     populateMissingOptions(options) {
         if (_.isUndefined(options.hdPathString)) {
@@ -90,11 +91,11 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Throw the appropriate exception on error
      *
-     * @param errors An array of possible WalletErrors
+     * @param {WalletError[]} errors An array of possible WalletErrors
      */
     throwOnError(...errors) {
-        for (let i = 0; i < errors.length; i++) {
-            switch (errors[i]) {
+        for (const error of errors) {
+            switch (error) {
                 case types_1.WalletError.StorageDisabled:
                     if (!Store_1.Store.IsStorageSupported())
                         throw new Error(types_1.WalletError.StorageDisabled);
@@ -105,7 +106,7 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Validate the seed or throw an InvalidSeed exception
      *
-     * @param seed The seed to validate
+     * @param {string} seed The seed to validate
      */
     validateSeedPhraseOrThrow(seed) {
         const valid = lightwallet.keystore.isSeedValid(seed);

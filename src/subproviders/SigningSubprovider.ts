@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import Web3 = require('web3');
+import * as Web3 from 'web3';
 import { TransactionManager, UnsignedPayload, PayloadType, MsgParams } from '../types';
 import { Subprovider } from './subprovider';
 
@@ -28,7 +28,7 @@ export class SigningSubprovider extends Subprovider {
                 } catch (err) {
                     end(err);
                 }
-                
+
                 return;
 
             case 'eth_sendTransaction':
@@ -38,7 +38,7 @@ export class SigningSubprovider extends Subprovider {
                         params: payload.params[0]
                     };
                     const signedTx = await this._transactionManager.signTransactionAsync(unsignedTx);
-                    
+
                     // emit a submit
                     const signedTxPayload = {
                         method: 'eth_sendRawTransaction',
@@ -49,7 +49,7 @@ export class SigningSubprovider extends Subprovider {
                 } catch (err) {
                     end(err);
                 }
-                
+
                 return;
 
             case 'eth_sign':

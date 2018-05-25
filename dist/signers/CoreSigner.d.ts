@@ -8,21 +8,21 @@ export declare class CoreSigner implements Signer {
     /**
      * Sign a personal message hash
      *
-     * @param account The account to sign with
-     * @param hash The hash to sign
+     * @param {string} account The account to sign with
+     * @param {string} hash The hash to sign
      */
     signPersonalMessageHashAsync(account: string, hash: string): Promise<string>;
     /**
      * Sign a personal message
      *
-     * @param account The account to sign with
-     * @param message The message to sign
+     * @param {string} account The account to sign with
+     * @param {string} message The message to sign
      */
     signPersonalMessageAsync(account: string, message: string): Promise<string>;
     /**
      * Sign a transaction
      *
-     * @param txParams The transaction parameters
+     * @param {PartialTxParams} txParams The transaction parameters
      */
     signTransactionAsync(txParams: PartialTxParams): Promise<string>;
 }

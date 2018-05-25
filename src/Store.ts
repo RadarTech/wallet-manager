@@ -1,5 +1,4 @@
 import * as lightwallet from 'eth-lightwallet';
-import { keystore, signing } from 'eth-lightwallet';
 import { CoreWallet } from './wallets/CoreWallet';
 import * as fs from 'fs';
 
@@ -8,7 +7,7 @@ export class Store {
   /**
    * Check for any storage support
    */
-  public static IsStorageSupported() {
+  public static IsStorageSupported(): boolean {
     return Store.IsFileStorageSupported() || Store.IsLocalStorageSupported();
   }
 
@@ -16,7 +15,7 @@ export class Store {
   * Check if local storage is supported
   *
   */
-  public static IsLocalStorageSupported() {
+  public static IsLocalStorageSupported(): boolean {
     if (typeof localStorage === 'undefined') {
       return false;
     }
@@ -34,7 +33,7 @@ export class Store {
   /**
    * Check if file storage is supported
    */
-  public static IsFileStorageSupported() {
+  public static IsFileStorageSupported(): boolean {
     if (typeof fs.writeFileSync === 'undefined') return false;
 
     try {
@@ -49,8 +48,8 @@ export class Store {
  /**
   * Save the encrypted wallet in local storage
   *
-  * @param wallet The wallet to save
-  * @param keyName The key identifier
+  * @param {CoreWallet} wallet The wallet to save
+  * @param {string} [keyName='radar-core-wallet'] The key identifier
   */
   public saveCoreWallet(wallet: CoreWallet, keyName: string = 'radar-core-wallet') {
     if (Store.IsLocalStorageSupported()) {
@@ -67,7 +66,7 @@ export class Store {
  /**
   * Load the encrypted wallet from local storage
   *
-  * @param keyName The key identifier
+  * @param {string} [keyName='radar-core-wallet']  The key identifier
   */
   public loadCoreWallet(keyName: string = 'radar-core-wallet') {
     let keystore = null;
