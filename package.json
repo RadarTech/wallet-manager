@@ -1,7 +1,7 @@
 {
   "name": "vault-manager",
   "version": "0.1.1",
-  "description": "A library that facilitates the core functions of the Radar Vault.",
+  "description": "A library that simplifies wallet & web3 creation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,6 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.0.4",
+    "@types/es6-promisify": "^6.0.0",
+    "@types/lodash": "^4.14.109",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.46",
     "browserify": "^16.1.1",
@@ -24,9 +26,7 @@
     "tslint-config-0xproject": "0.0.2",
     "typescript": "^2.5.3",
     "uglify-es": "^3.3.9",
-    "web3-typescript-typings": "^0.10.2",
-    "@types/es6-promisify": "^6.0.0",
-    "@types/lodash": "^4.14.109"
+    "web3-typescript-typings": "^0.10.2"
   },
   "dependencies": {
     "@0xproject/assert": "^0.1.0",
