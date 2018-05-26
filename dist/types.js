@@ -29,3 +29,8 @@ var InfuraNetwork;
     InfuraNetwork["Rinkeby"] = "rinkeby";
     InfuraNetwork["Ropsten"] = "ropsten";
 })(InfuraNetwork = exports.InfuraNetwork || (exports.InfuraNetwork = {}));
+var NonceSubproviderErrors;
+(function (NonceSubproviderErrors) {
+    NonceSubproviderErrors["EmptyParametersFound"] = "EMPTY_PARAMETERS_FOUND";
+    NonceSubproviderErrors["CannotDetermineAddressFromPayload"] = "CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD";
+})(NonceSubproviderErrors = exports.NonceSubproviderErrors || (exports.NonceSubproviderErrors = {}));

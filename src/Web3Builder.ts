@@ -1,12 +1,12 @@
 import * as Web3 from 'web3';
 import { WalletType, InfuraNetwork, WalletError, RpcConnection, TransactionManager } from './types';
-import { SigningSubprovider, NonceTrackerSubprovider, RedundantRPCSubprovider } from './subproviders';
+import { PassThroughSigningSubprovider, NonceTrackerSubprovider, RedundantRPCSubprovider } from './subproviders';
 import { PUBLIC_RPC_PROVIDER_URLS } from './constants';
 import Web3ProviderEngine = require('web3-provider-engine');
 
 export class Web3Builder {
   public provider: Web3ProviderEngine;
-  private _currentSigningSubprovider: SigningSubprovider;
+  private _currentPassThroughSigningSubprovider: PassThroughSigningSubprovider;
   private _currentRpcSubprovider: RedundantRPCSubprovider;
   private _cacheNonce: boolean;
 
@@ -22,7 +22,7 @@ export class Web3Builder {
     connection: RpcConnection = InfuraNetwork.Mainnet,
     cacheNonce?: boolean
   ): Web3 {
-    const signingSubprovider = new SigningSubprovider(transactionManager);
+    const signingSubprovider = new PassThroughSigningSubprovider(transactionManager);
     const rpcSubprovider = new RedundantRPCSubprovider(
       PUBLIC_RPC_PROVIDER_URLS(connection)
     );
@@ -36,7 +36,7 @@ export class Web3Builder {
    * @param {TransactionManager} transactionManager The transaction manager
    */
   public updateSigner(transactionManager: TransactionManager): Web3 {
-    const signingSubprovider = new SigningSubprovider(transactionManager);
+    const signingSubprovider = new PassThroughSigningSubprovider(transactionManager);
 
     return this.constructWeb3Object(
       signingSubprovider,
@@ -56,7 +56,7 @@ export class Web3Builder {
     );
 
     return this.constructWeb3Object(
-      this._currentSigningSubprovider,
+      this._currentPassThroughSigningSubprovider,
       rpcSubprovider,
       this._cacheNonce
     );
@@ -65,12 +65,12 @@ export class Web3Builder {
   /**
    * Constructs the web3 object
    *
-   * @param {SigningSubprovider} signingSubprovider The signing subprovider
+   * @param {PassThroughSigningSubprovider} signingSubprovider The signing subprovider
    * @param {RedundantRPCSubprovider} rpcSubprovider The rpc subprovider
    * @param {boolean} [cacheNonce] Cache the nonce with the nonce tracker subprovider
    */
   private constructWeb3Object(
-    signingSubprovider: SigningSubprovider,
+    signingSubprovider: PassThroughSigningSubprovider,
     rpcSubprovider: RedundantRPCSubprovider,
     cacheNonce?: boolean
   ): Web3 {
@@ -87,7 +87,7 @@ export class Web3Builder {
     (this.provider as any)._ready.go();
 
     // Set current subproviders
-    this._currentSigningSubprovider = signingSubprovider;
+    this._currentPassThroughSigningSubprovider = signingSubprovider;
     this._currentRpcSubprovider = rpcSubprovider;
     this._cacheNonce = cacheNonce;
 

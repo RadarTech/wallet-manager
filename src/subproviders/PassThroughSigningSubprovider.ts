@@ -9,7 +9,7 @@ import { Subprovider } from './subprovider';
  * which acts as a wrapper for eth-lightwallet.
  * Source: https://github.com/MetaMask/provider-engine/blob/master/subproviders/subprovider.js
  */
-export class SigningSubprovider extends Subprovider {
+export class PassThroughSigningSubprovider extends Subprovider {
     private _transactionManager: TransactionManager;
     constructor(transactionManager: TransactionManager) {
         super();

@@ -10,36 +10,36 @@ const w = (window as any);
 const activeAddressSpan = document.getElementById('activeAddress');
 const web3InitializedSpan = document.getElementById('web3Initialized');
 const transactionHistorySpan = document.getElementById('txHistory');
-const initWeb3Button = <HTMLButtonElement>document.getElementById('initWeb3');
-const callWeb3SignButton = <HTMLButtonElement>document.getElementById('callWeb3Sign');
-const callWeb3SendTransactionButton = <HTMLButtonElement>document.getElementById('callWeb3SendTransaction');
+const initWeb3Button = document.getElementById('initWeb3') as HTMLButtonElement;
+const callWeb3SignButton = document.getElementById('callWeb3Sign') as HTMLButtonElement;
+const callWeb3SendTransactionButton = document.getElementById('callWeb3SendTransaction') as HTMLButtonElement;
 
 let wallet: CoreWallet;
-let history: Array<any> = []; 
+const history: any[] = [];
 
 /**
  * Creates a new core wallet instance
- * 
+ *
  */
-w.createNewCoreWalletAsync = async function()  {
+w.createNewCoreWalletAsync = async () => {
   // Instantiate the WalletManager
   const walletManager = new WalletManager();
 
   // Create a new core wallet
   wallet = await walletManager.core.createWalletAsync({ password: 'supersecretpassword99' });
-  
+
   // Display active address
   activeAddressSpan.innerHTML = wallet.getAccounts()[0];
 
   // Enable Web3 Button
   initWeb3Button.disabled = false;
-}
+};
 
 /**
  * Initializes web3 against Kovan
- * 
+ *
  */
-w.initializeWeb3 = function() {
+w.initializeWeb3 = () => {
   // Instantiate the Web3Builder
   const web3Builder = new Web3Builder();
 
@@ -47,34 +47,34 @@ w.initializeWeb3 = function() {
   const transactionManager = new CoreTransactionManager(wallet);
 
   // Create the web3 object
-  Web3.Instance = web3Builder.setSignerAndRpcConnection(transactionManager, InfuraNetwork.Kovan);
+  Web3.Instance = web3Builder.createWeb3(transactionManager, InfuraNetwork.Kovan);
 
   // Set Web3 Initialized text
   web3InitializedSpan.innerHTML = 'Yes';
   callWeb3SendTransactionButton.disabled = false;
   callWeb3SignButton.disabled = false;
-}
+};
 
 /**
  * Calls web3.eth.sign with an arbitrary message
- * 
+ *
  */
-w.callWeb3Sign = async function() {
+w.callWeb3Sign = async () => {
   try {
     const web3 = Web3.Instance;
     const signedMsg = await promisify(web3.eth.sign)(wallet.getAccounts()[0], 'hello world');
     history.push(signedMsg);
   } catch (err) {
     history.push(err);
-  } 
+  }
   transactionHistorySpan.innerHTML = JSON.stringify(history);
-}
+};
 
 /**
  * Calls web3.eth.sendTransaction with arbitrary tx params
- * 
+ *
  */
-w.callWeb3SendTransaction = async function() {
+w.callWeb3SendTransaction = async () => {
   try {
     const web3 = Web3.Instance;
     const signedTx = await promisify(web3.eth.sendTransaction)({
@@ -87,4 +87,4 @@ w.callWeb3SendTransaction = async function() {
     history.push(err);
   }
   transactionHistorySpan.innerHTML = JSON.stringify(history);
-}
+};

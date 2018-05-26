@@ -72,3 +72,11 @@ export declare enum InfuraNetwork {
     Ropsten = "ropsten",
 }
 export declare type RpcConnection = string | InfuraNetwork;
+export declare type ErrorCallback = (err: Error | null, data?: any) => void;
+export declare type Callback = () => void;
+export declare type OnNextCompleted = (err: Error | null, result: any, cb: Callback) => void;
+export declare type NextCallback = (callback?: OnNextCompleted) => void;
+export declare enum NonceSubproviderErrors {
+    EmptyParametersFound = "EMPTY_PARAMETERS_FOUND",
+    CannotDetermineAddressFromPayload = "CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD",
+}
