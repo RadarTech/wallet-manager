@@ -1,23 +1,48 @@
 import * as Web3 from 'web3';
 import { WalletType, InfuraNetwork, WalletError, RpcConnection, TransactionManager } from './types';
-import { SigningSubprovider, RedundantRPCSubprovider } from './subproviders';
+import { SigningSubprovider, NonceTrackerSubprovider, RedundantRPCSubprovider } from './subproviders';
 import { PUBLIC_RPC_PROVIDER_URLS } from './constants';
 import Web3ProviderEngine = require('web3-provider-engine');
 
 export class Web3Builder {
   public provider: Web3ProviderEngine;
-  private _currentSigningSubprovider;
-  private _currentRpcSubprovider;
-  private _additionalSubproviders: any[] = [];
+  private _currentSigningSubprovider: SigningSubprovider;
+  private _currentRpcSubprovider: RedundantRPCSubprovider;
+  private _cacheNonce: boolean;
+
+  /**
+   * Creates a new web3 instance
+   *
+   * @param {TransactionManager} transactionManager The transaction manager
+   * @param {RpcConnection} [connection=InfuraNetwork.Mainnet] The rpc connection
+   * @param {boolean} [cacheNonce] Cache the nonce
+   */
+  public createWeb3(
+    transactionManager: TransactionManager,
+    connection: RpcConnection = InfuraNetwork.Mainnet,
+    cacheNonce?: boolean
+  ): Web3 {
+    const signingSubprovider = new SigningSubprovider(transactionManager);
+    const rpcSubprovider = new RedundantRPCSubprovider(
+      PUBLIC_RPC_PROVIDER_URLS(connection)
+    );
+
+    return this.constructWeb3Object(signingSubprovider, rpcSubprovider, cacheNonce);
+  }
 
   /**
    * Sets the transaction signer
    *
    * @param {TransactionManager} transactionManager The transaction manager
    */
-  public setSigner(transactionManager: TransactionManager): Web3 {
+  public updateSigner(transactionManager: TransactionManager): Web3 {
     const signingSubprovider = new SigningSubprovider(transactionManager);
-    return this.createWeb3Object(signingSubprovider, this._currentRpcSubprovider, this._additionalSubproviders);
+
+    return this.constructWeb3Object(
+      signingSubprovider,
+      this._currentRpcSubprovider,
+      this._cacheNonce
+    );
   }
 
   /**
@@ -25,54 +50,34 @@ export class Web3Builder {
    *
    * @param {RpcConnection} connection The rpc connection url
    */
-  public setRpcConnection(connection: RpcConnection): Web3 {
+  public updateRpcConnection(connection: RpcConnection): Web3 {
     const rpcSubprovider = new RedundantRPCSubprovider(
       PUBLIC_RPC_PROVIDER_URLS(connection)
     );
 
-    return this.createWeb3Object(this._currentSigningSubprovider, rpcSubprovider, this._additionalSubproviders);
-  }
-
-  /**
-   * Sets both the signer and rpc connection
-   *
-   * @param {TransactionManager} transactionManager The transaction manager
-   * @param {RpcConnection} [connection=InfuraNetwork.Mainnet] The rpc connection url
-   * @param {any[]} [subproviders] Optional additional subproviders
-   */
-  public setSignerAndRpcConnection(
-    transactionManager: TransactionManager,
-    connection: RpcConnection = InfuraNetwork.Mainnet,
-    ...subproviders: any[]
-  ): Web3 {
-    if (this.provider !== undefined) {
-      this.provider.stop();
-    }
-
-    const signingSubprovider = new SigningSubprovider(transactionManager);
-    const rpcSubprovider = new RedundantRPCSubprovider(
-      PUBLIC_RPC_PROVIDER_URLS(connection)
+    return this.constructWeb3Object(
+      this._currentSigningSubprovider,
+      rpcSubprovider,
+      this._cacheNonce
     );
-
-    return this.createWeb3Object(signingSubprovider, rpcSubprovider, subproviders);
   }
 
   /**
-   * Creates the web3 object
+   * Constructs the web3 object
    *
    * @param {SigningSubprovider} signingSubprovider The signing subprovider
    * @param {RedundantRPCSubprovider} rpcSubprovider The rpc subprovider
-   * @param {any[]} [additionalSubproviders] Additional subproviders
+   * @param {boolean} [cacheNonce] Cache the nonce with the nonce tracker subprovider
    */
-  private createWeb3Object(
+  private constructWeb3Object(
     signingSubprovider: SigningSubprovider,
     rpcSubprovider: RedundantRPCSubprovider,
-    additionalSubproviders?: any[]
+    cacheNonce?: boolean
   ): Web3 {
     this.provider = new Web3ProviderEngine();
 
-    for (const subprovider of additionalSubproviders) {
-      this.provider.addProvider(subprovider);
+    if (cacheNonce) {
+      this.provider.addProvider(new NonceTrackerSubprovider());
     }
 
     this.provider.addProvider(signingSubprovider);
@@ -84,7 +89,7 @@ export class Web3Builder {
     // Set current subproviders
     this._currentSigningSubprovider = signingSubprovider;
     this._currentRpcSubprovider = rpcSubprovider;
-    this._additionalSubproviders = additionalSubproviders;
+    this._cacheNonce = cacheNonce;
 
     return new Web3(this.provider);
   }
