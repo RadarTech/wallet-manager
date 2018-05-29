@@ -1,5 +1,6 @@
 import { WalletManager } from '../src/WalletManager';
 import { Web3Builder } from 'web3-builder';
+import { PassThroughWalletSubprovider } from 'subproviders';
 import { CoreTransactionManager } from './TransactionManager';
 import { InfuraNetwork } from '../src/types';
 import { CoreWallet } from '../src/wallets/CoreWallet';
@@ -46,8 +47,11 @@ w.initializeWeb3 = () => {
   // Instantiate the TransactionManager. Pass the core wallet instance into the constructor.
   const transactionManager = new CoreTransactionManager(wallet);
 
+  // Instantiate the PassThroughWalletSubprovider. Pass the TransactionManager instance into the constructor.
+  const walletSubprovider = new PassThroughWalletSubprovider(transactionManager);
+
   // Create the web3 object
-  Web3.Instance = web3Builder.createWeb3(transactionManager, InfuraNetwork.Kovan);
+  Web3.Instance = web3Builder.createWeb3(walletSubprovider, InfuraNetwork.Kovan);
 
   // Set Web3 Initialized text
   web3InitializedSpan.innerHTML = 'Yes';
