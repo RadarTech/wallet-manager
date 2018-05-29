@@ -1,7 +1,7 @@
 {
-  "name": "vault-manager",
+  "name": "wallet-manager",
   "version": "0.1.2",
-  "description": "A library that simplifies wallet creation.",
+  "description": "A library that simplifies Ethereum wallet creation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

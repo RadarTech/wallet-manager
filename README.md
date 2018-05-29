@@ -1,6 +1,6 @@
-# vault-manager
+# wallet-manager
 
-A library that simplifies wallet & web3 creation.
+A library that simplifies Ethereum wallet creation.
 
 ## Usage
 
