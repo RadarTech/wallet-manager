@@ -1,9 +1,9 @@
-import { UnsignedPayload, PayloadType, PartialTxParams } from "../src/types";
-import { FormattedPayload } from "./UnsignedStack";
+import { UnsignedPayload, PayloadType, PartialTxParams } from '../src/types';
+import { FormattedPayload } from './UnsignedStack';
 
 /**
  * Updates the UI for demo purposes
- * 
+ *
  */
 export function updateUI(unsignedPayload: UnsignedPayload, store: FormattedPayload[]) {
   const txStack = document.getElementById('txStack');
@@ -12,8 +12,8 @@ export function updateUI(unsignedPayload: UnsignedPayload, store: FormattedPaylo
   const message = document.getElementById('message');
   const txDiv = document.getElementById('txDiv');
   const msgDiv = document.getElementById('msgDiv');
-  const gasPrice = (<HTMLInputElement>document.getElementById('gasPrice'));
-  const gasLimit = (<HTMLInputElement>document.getElementById('gasLimit'));
+  const gasPrice = document.getElementById('gasPrice') as HTMLInputElement;
+  const gasLimit = document.getElementById('gasLimit') as HTMLInputElement;
 
   if (!unsignedPayload) {
     // Clear Stack

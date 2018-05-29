@@ -73,3 +73,9 @@ export declare enum NonceSubproviderErrors {
     EmptyParametersFound = "EMPTY_PARAMETERS_FOUND",
     CannotDetermineAddressFromPayload = "CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD",
 }
+export declare enum InfuraNetwork {
+    Mainnet = "mainnet",
+    Kovan = "kovan",
+    Rinkeby = "rinkeby",
+    Ropsten = "ropsten",
+}

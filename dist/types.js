@@ -27,3 +27,10 @@ var NonceSubproviderErrors;
     NonceSubproviderErrors["EmptyParametersFound"] = "EMPTY_PARAMETERS_FOUND";
     NonceSubproviderErrors["CannotDetermineAddressFromPayload"] = "CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD";
 })(NonceSubproviderErrors = exports.NonceSubproviderErrors || (exports.NonceSubproviderErrors = {}));
+var InfuraNetwork;
+(function (InfuraNetwork) {
+    InfuraNetwork["Mainnet"] = "mainnet";
+    InfuraNetwork["Kovan"] = "kovan";
+    InfuraNetwork["Rinkeby"] = "rinkeby";
+    InfuraNetwork["Ropsten"] = "ropsten";
+})(InfuraNetwork = exports.InfuraNetwork || (exports.InfuraNetwork = {}));

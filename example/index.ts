@@ -1,10 +1,10 @@
-import { WalletManager } from "../src/WalletManager";
-import { Web3Builder } from '../src/Web3Builder';
-import { CoreTransactionManager } from "./TransactionManager";
-import { InfuraNetwork } from "../src/types";
-import { CoreWallet } from "../src/wallets/CoreWallet";
-import { promisify } from "@0xproject/utils";
-import { Web3 } from "./Web3";
+import { WalletManager } from '../src/WalletManager';
+import { Web3Builder } from 'web3-builder';
+import { CoreTransactionManager } from './TransactionManager';
+import { InfuraNetwork } from '../src/types';
+import { CoreWallet } from '../src/wallets/CoreWallet';
+import { promisify } from '@0xproject/utils';
+import { Web3 } from './Web3';
 
 const w = (window as any);
 const activeAddressSpan = document.getElementById('activeAddress');

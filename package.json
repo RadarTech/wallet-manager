@@ -37,6 +37,7 @@
     "semaphore-async-await": "^1.5.1",
     "subproviders": "../subproviders",
     "web3": "0.20.0",
+    "web3-builder": "../web3-builder",
     "web3-provider-engine": "14.0.5"
   }
 }
