@@ -22,13 +22,6 @@ var WalletType;
     WalletType[WalletType["Core"] = 0] = "Core";
     WalletType[WalletType["Ledger"] = 1] = "Ledger";
 })(WalletType = exports.WalletType || (exports.WalletType = {}));
-var InfuraNetwork;
-(function (InfuraNetwork) {
-    InfuraNetwork["Mainnet"] = "mainnet";
-    InfuraNetwork["Kovan"] = "kovan";
-    InfuraNetwork["Rinkeby"] = "rinkeby";
-    InfuraNetwork["Ropsten"] = "ropsten";
-})(InfuraNetwork = exports.InfuraNetwork || (exports.InfuraNetwork = {}));
 var NonceSubproviderErrors;
 (function (NonceSubproviderErrors) {
     NonceSubproviderErrors["EmptyParametersFound"] = "EMPTY_PARAMETERS_FOUND";

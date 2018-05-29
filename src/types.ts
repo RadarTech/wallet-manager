@@ -79,15 +79,6 @@ export enum WalletType {
   Ledger
 }
 
-export enum InfuraNetwork {
-  Mainnet = 'mainnet',
-  Kovan = 'kovan',
-  Rinkeby = 'rinkeby',
-  Ropsten = 'ropsten',
-}
-
-export declare type RpcConnection = string | InfuraNetwork;
-
 export type ErrorCallback = (err: Error | null, data?: any) => void;
 export type Callback = () => void;
 export type OnNextCompleted = (err: Error | null, result: any, cb: Callback) => void;
