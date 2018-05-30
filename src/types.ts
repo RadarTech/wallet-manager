@@ -79,11 +79,19 @@ export enum WalletType {
   Ledger
 }
 
+export type ErrorCallback = (err: Error | null, data?: any) => void;
+export type Callback = () => void;
+export type OnNextCompleted = (err: Error | null, result: any, cb: Callback) => void;
+export type NextCallback = (callback?: OnNextCompleted) => void;
+
+export enum NonceSubproviderErrors {
+  EmptyParametersFound = 'EMPTY_PARAMETERS_FOUND',
+  CannotDetermineAddressFromPayload = 'CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD',
+}
+
 export enum InfuraNetwork {
   Mainnet = 'mainnet',
   Kovan = 'kovan',
   Rinkeby = 'rinkeby',
   Ropsten = 'ropsten',
 }
-
-export declare type RpcConnection = string | InfuraNetwork;

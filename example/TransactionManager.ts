@@ -1,6 +1,13 @@
 import * as _ from 'lodash';
 import { EventEmitter } from 'events';
-import { TransactionManager, Signer, PayloadType, PartialTxParams, UnsignedPayload, SigningError, Wallet } from "../src/types";
+import {
+  TransactionManager,
+  Signer,
+  PayloadType,
+  PartialTxParams,
+  UnsignedPayload,
+  SigningError,
+  Wallet } from '../src/types';
 import { promisify, BigNumber } from '@0xproject/utils';
 import { Web3 } from './Web3';
 import { UnsignedStack } from './UnsignedStack';
@@ -22,7 +29,7 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Get the first account from the connected wallet
-  * 
+  *
   */
   public getAccounts() {
     return [this._wallet.getAccounts()[0]];
@@ -30,7 +37,7 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Entry method for signing/sending a transaction
-  * 
+  *
   */
   public async signTransactionAsync(unsignedTx: UnsignedPayload) {
     // Populate the missing tx params
@@ -40,10 +47,10 @@ export class CoreTransactionManager implements TransactionManager {
       this.addPayloadToStack(unsignedTx, resolve, reject);
     });
   }
-  
+
  /**
   * Entry method for signing a message
-  * 
+  *
   */
   public async signMessageAsync(unsignedMsg: UnsignedPayload) {
     return new Promise((resolve, reject) => {
@@ -53,20 +60,20 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Formats and adds an unsigned payload to the stack
-  * 
+  *
   */
   private addPayloadToStack(payload: UnsignedPayload, resolve: any, reject: any) {
     const formattedPayload = {
       payload,
       resolve,
-      reject 
+      reject
     };
     this._unsignedStack.push(formattedPayload);
   }
 
  /**
   * Populates the missing tx params
-  * 
+  *
   */
   private async populateMissingTxParams(unsignedPayload: UnsignedPayload): Promise<PartialTxParams> {
     const web3 = Web3.Instance;
@@ -76,7 +83,7 @@ export class CoreTransactionManager implements TransactionManager {
     // TODO: This must be called every time a tx tops the stack to avoid reusing the previous nonce
     const nonce = await promisify<number>(web3.eth.getTransactionCount)(unsignedPayload.params.from, 'pending');
 
-    const filledParams = <PartialTxParams>unsignedPayload.params;
+    const filledParams = unsignedPayload.params as PartialTxParams;
 
     // Fill Params
     filledParams.gasPrice = `0x${defaultGasPrice.toString(16)}`;
@@ -88,7 +95,7 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Cancels a transaction
-  * 
+  *
   */
   private cancelTx() {
     this._unsignedStack.peek().reject(SigningError.UserDeclined);
@@ -97,7 +104,7 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Signs a transaction
-  * 
+  *
   */
   private async signTxAsync() {
     const formattedPayload = this._unsignedStack.peek();
@@ -111,7 +118,7 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Cancels a message
-  * 
+  *
   */
   private cancelMsg() {
     this._unsignedStack.peek().reject(SigningError.UserDeclined);
@@ -120,13 +127,16 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Signs a message
-  * 
+  *
   */
   private async signMsgAsync() {
     const formattedPayload = this._unsignedStack.peek();
 
     // Sign the message
-    const signedMsg = await this._wallet.signer.signPersonalMessageAsync(formattedPayload.payload.params.from, formattedPayload.payload.params.data);
+    const signedMsg =
+      await this._wallet.signer.signPersonalMessageAsync(
+        formattedPayload.payload.params.from,
+        formattedPayload.payload.params.data);
 
     formattedPayload.resolve(signedMsg);
     this._unsignedStack.pop();
@@ -134,7 +144,7 @@ export class CoreTransactionManager implements TransactionManager {
 
  /**
   * Adds the click event listeners
-  * 
+  *
   */
   private addClickEventListeners() {
     const cancelTxButton = document.getElementById('cancelTxButton');
@@ -145,6 +155,6 @@ export class CoreTransactionManager implements TransactionManager {
     cancelTxButton.addEventListener('click', this.cancelTx.bind(this));
     signTxButton.addEventListener('click', this.signTxAsync.bind(this));
     cancelMsgButton.addEventListener('click', this.cancelMsg.bind(this));
-    signMsgButton.addEventListener('click', this.signMsgAsync.bind(this));    
+    signMsgButton.addEventListener('click', this.signMsgAsync.bind(this));
   }
 }

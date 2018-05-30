@@ -1,6 +1,6 @@
-import { CoreTransactionManager } from "./TransactionManager";
-import { UnsignedPayload, PayloadType, PartialTxParams } from "../src/types";
-import { updateUI } from "./UIHelper";
+import { CoreTransactionManager } from './TransactionManager';
+import { UnsignedPayload, PayloadType, PartialTxParams } from '../src/types';
+import { updateUI } from './UIHelper';
 
 export interface FormattedPayload {
   payload: UnsignedPayload;
@@ -10,26 +10,26 @@ export interface FormattedPayload {
 
 export class UnsignedStack {
   private _store: FormattedPayload[] = [];
-  
-  count(): number {
+
+  public count(): number {
     return this._store.length;
   }
 
-  isEmpty(): boolean {
+  public isEmpty(): boolean {
     return !this._store.length;
   }
 
-  push(val: FormattedPayload) {
+  public push(val: FormattedPayload) {
     this._store.push(val);
     updateUI(val ? val.payload : undefined, this._store);
   }
 
-  pop() {
+  public pop() {
     this._store.pop();
-    updateUI(this.peek() ? this.peek().payload: undefined, this._store);
+    updateUI(this.peek() ? this.peek().payload : undefined, this._store);
   }
 
-  peek(): FormattedPayload | undefined {
+  public peek(): FormattedPayload | undefined {
     return this._store[this._store.length - 1];
   }
 }
