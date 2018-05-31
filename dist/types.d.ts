@@ -4,6 +4,7 @@ export interface LightWalletOptions {
     seedPhrase?: string;
     salt?: string;
     hdPathString?: string;
+    storageKeyName?: string;
 }
 export interface ECSignatureBuffer {
     v: number;

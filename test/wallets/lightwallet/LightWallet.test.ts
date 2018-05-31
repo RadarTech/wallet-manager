@@ -9,11 +9,12 @@ const expect = chai.expect;
 /* tslint:disable:no-unused-expression */
 describe('LightWallet', () => {
     const password = 'supersecretpassword99';
+    const storageKeyName = 'lightwallet';
     let lightWallet: LightWallet;
 
     beforeEach(async () => {
       const walletManager = new LightWalletManager();
-      lightWallet = await walletManager.createWalletAsync({ password });
+      lightWallet = await walletManager.createWalletAsync({ password, storageKeyName });
     });
 
     it('can add a single account', async () => {

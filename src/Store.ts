@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { Wallet } from './types';
+import { Wallet, WalletError } from './types';
 
 export class Store {
 
@@ -73,6 +73,10 @@ export class Store {
       serializedKeystore = localStorage.getItem(keyName);
     } else if (Store.IsFileStorageSupported()) {
       serializedKeystore = fs.readFileSync('.' + keyName).toString();
+    }
+
+    if (!serializedKeystore) {
+      throw new Error(WalletError.NoWalletFound);
     }
 
     return serializedKeystore;

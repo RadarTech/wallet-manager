@@ -12,6 +12,7 @@ describe('LightWalletSigner', () => {
     const seedPhrase = 'dilemma hollow outer pony cube season start stereo surprise when edit blast';
     const salt = 'kvODghzs7Ff1uqHyI0P3wI4Hso4w4iWT2e9qmrWz0y4';
     const password = 'supersecretpassword99';
+    const storageKeyName = 'lightwallet';
     const account = '0x44be42fd88e22387c43ba9b75941aa3e680dae25';
     let signer: LightWalletSigner;
 
@@ -21,6 +22,7 @@ describe('LightWalletSigner', () => {
         password,
         seedPhrase,
         salt,
+        storageKeyName,
         hdPathString: `m/44'/60'/0'`
       };
       signer = (await walletManager.createWalletAsync(options)).signer;

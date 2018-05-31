@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
+const types_1 = require("./types");
 class Store {
     /**
      * Check for any storage support
@@ -71,6 +72,9 @@ class Store {
         }
         else if (Store.IsFileStorageSupported()) {
             serializedKeystore = fs.readFileSync('.' + keyName).toString();
+        }
+        if (!serializedKeystore) {
+            throw new Error(types_1.WalletError.NoWalletFound);
         }
         return serializedKeystore;
     }

@@ -25,7 +25,7 @@ export class LightWalletManager extends LightWalletBase {
     keystore.generateNewAddress(pwDerivedKey, 1);
 
     const lightWallet = new LightWallet(keystore, lightwallet.signing, pwDerivedKey);
-    this.store.saveWallet(lightWallet);
+    this.store.saveWallet(lightWallet, options.storageKeyName);
     return lightWallet;
   }
 
@@ -34,8 +34,8 @@ export class LightWalletManager extends LightWalletBase {
    *
    * @param {LightWallet} wallet The wallet instance
    */
-  public saveWallet(wallet: LightWallet): void {
-    if (wallet) this.store.saveWallet(wallet);
+  public saveWallet(wallet: LightWallet, keyName?: string): void {
+    if (wallet) this.store.saveWallet(wallet, keyName);
   }
 
   /**
@@ -43,12 +43,8 @@ export class LightWalletManager extends LightWalletBase {
    *
    * @param {string} password The plaintext password
    */
-  public async loadWalletAsync(password: string): Promise<LightWallet> {
-    const serializedKeystore = this.store.loadWallet();
-    if (!serializedKeystore) {
-      throw new Error(WalletError.NoWalletFound);
-    }
-
+  public async loadWalletAsync(password: string, keyName?: string): Promise<LightWallet> {
+    const serializedKeystore = this.store.loadWallet(keyName);
     const keystore = lightwallet.keystore.deserialize(serializedKeystore);
     const pwDerivedKey: Uint8Array = await this.deriveKeyFromPasswordAsync(keystore, password);
     this.validatePwDerivedKeyOrThrow(pwDerivedKey, keystore);

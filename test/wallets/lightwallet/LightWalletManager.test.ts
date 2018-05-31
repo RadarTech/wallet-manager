@@ -12,11 +12,11 @@ const expect = chai.expect;
 /* tslint:disable:no-unused-expression */
 describe('LightWalletManager', () => {
     const password = 'supersecretpassword99';
-    const localStorageKey = 'lightwallet';
+    const storageKeyName = 'lightwallet';
 
     it('can create a new lightwallet', async () => {
         const walletManager = new LightWalletManager();
-        const lightWallet = await walletManager.createWalletAsync({ password });
+        const lightWallet = await walletManager.createWalletAsync({ password, storageKeyName });
 
         // Export the seed phrase
         const seedPhrase = await lightWallet.exportSeedPhraseAsync(password);
@@ -33,13 +33,13 @@ describe('LightWalletManager', () => {
 
     it('can save and load the wallet from local storage or filesystem', async () => {
         const walletManager = new LightWalletManager();
-        let lightWallet = await walletManager.createWalletAsync({ password });
+        let lightWallet = await walletManager.createWalletAsync({ password, storageKeyName });
 
         // Remove the wallet from memory
         lightWallet =  null;
 
         // Reload the wallet from local storage
-        lightWallet = await walletManager.loadWalletAsync(password);
+        lightWallet = await walletManager.loadWalletAsync(password, storageKeyName);
 
         // Export the seed phrase
         const seedPhrase = await lightWallet.exportSeedPhraseAsync(password);
@@ -61,7 +61,7 @@ describe('LightWalletManager', () => {
         let errorMessage;
         try {
             // Attempt to load the wallet with an incorrect password
-            const lightWallet = await walletManager.loadWalletAsync(incorrectPassword);
+            const lightWallet = await walletManager.loadWalletAsync(incorrectPassword, storageKeyName);
         } catch (err) {
             errorMessage = err.message;
         }
@@ -73,10 +73,10 @@ describe('LightWalletManager', () => {
 
         // Remove from local storage
         if (Store.IsLocalStorageSupported) {
-          localStorage.removeItem(localStorageKey);
+          localStorage.removeItem(storageKeyName);
         } else {
           const fsUnlink = promisify(fs.unlink);
-          await fsUnlink('.' + localStorageKey);
+          await fsUnlink('.' + storageKeyName);
         }
 
         const walletManager = new LightWalletManager();
@@ -84,7 +84,7 @@ describe('LightWalletManager', () => {
         let errorMessage;
         try {
             // Attempt to retrieve a wallet that doesn't exist
-            const lightWallet = await walletManager.loadWalletAsync(password);
+            const lightWallet = await walletManager.loadWalletAsync(password, storageKeyName);
         } catch (err) {
             errorMessage = err.message;
         }

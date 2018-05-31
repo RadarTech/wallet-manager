@@ -13,13 +13,13 @@ export declare class LightWalletManager extends LightWalletBase {
      *
      * @param {LightWallet} wallet The wallet instance
      */
-    saveWallet(wallet: LightWallet): void;
+    saveWallet(wallet: LightWallet, keyName?: string): void;
     /**
      * Loads a wallet from local storage
      *
      * @param {string} password The plaintext password
      */
-    loadWalletAsync(password: string): Promise<LightWallet>;
+    loadWalletAsync(password: string, keyName?: string): Promise<LightWallet>;
     /**
      * Initializes a new eth-lightwallet keystore
      *
