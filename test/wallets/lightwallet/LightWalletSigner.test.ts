@@ -2,28 +2,28 @@ import * as mocha from 'mocha';
 import * as chai from 'chai';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError, PartialTxParams } from '../../../src/types';
-import { CoreWallet } from '../../../src/wallets/CoreWallet';
-import { CoreSigner } from '../../../src/signers/CoreSigner';
+import { LightWallet, LightWalletManager } from '../../../src/wallets/LightWallet';
+import { LightWalletSigner } from '../../../src/wallets/lightwallet/LightWalletSigner';
 
 const expect = chai.expect;
 
 /* tslint:disable:no-unused-expression */
-describe('CoreSigner', () => {
+describe('LightWalletSigner', () => {
     const seedPhrase = 'dilemma hollow outer pony cube season start stereo surprise when edit blast';
     const salt = 'kvODghzs7Ff1uqHyI0P3wI4Hso4w4iWT2e9qmrWz0y4';
     const password = 'supersecretpassword99';
     const account = '0x44be42fd88e22387c43ba9b75941aa3e680dae25';
-    let signer: CoreSigner;
+    let signer: LightWalletSigner;
 
     before(async () => {
-      const walletManager = new WalletManager();
+      const walletManager = new LightWalletManager();
       const options = {
         password,
         seedPhrase,
         salt,
         hdPathString: `m/44'/60'/0'`
       };
-      signer = (await walletManager.core.createWalletAsync(options)).signer;
+      signer = (await walletManager.createWalletAsync(options)).signer;
     });
 
     it('can sign a personal message', async () => {

@@ -2,39 +2,39 @@ import * as mocha from 'mocha';
 import * as chai from 'chai';
 import { WalletManager } from '../../../src/WalletManager';
 import { WalletError } from '../../../src/types';
-import { CoreWallet } from '../../../src/wallets/CoreWallet';
+import { LightWallet, LightWalletManager } from '../../../src/wallets/LightWallet';
 
 const expect = chai.expect;
 
 /* tslint:disable:no-unused-expression */
-describe('CoreWallet', () => {
+describe('LightWallet', () => {
     const password = 'supersecretpassword99';
-    let coreWallet: CoreWallet;
+    let lightWallet: LightWallet;
 
     beforeEach(async () => {
-      const walletManager = new WalletManager();
-      coreWallet = await walletManager.core.createWalletAsync({ password });
+      const walletManager = new LightWalletManager();
+      lightWallet = await walletManager.createWalletAsync({ password });
     });
 
     it('can add a single account', async () => {
-      const preAddCount = coreWallet.getAccounts().length;
+      const preAddCount = lightWallet.getAccounts().length;
 
       // Add a new account
-      coreWallet.addNewAccounts(1);
+      lightWallet.addNewAccounts(1);
 
-      const numberOfAccountsAdded = coreWallet.getAccounts().length - preAddCount;
+      const numberOfAccountsAdded = lightWallet.getAccounts().length - preAddCount;
 
       // One account should have been added
       expect(numberOfAccountsAdded).to.equal(1);
     });
 
     it('can add a multiple accounts', async () => {
-      const preAddCount = coreWallet.getAccounts().length;
+      const preAddCount = lightWallet.getAccounts().length;
 
       // Add a new account
-      coreWallet.addNewAccounts(3);
+      lightWallet.addNewAccounts(3);
 
-      const numberOfAccountsAdded = coreWallet.getAccounts().length - preAddCount;
+      const numberOfAccountsAdded = lightWallet.getAccounts().length - preAddCount;
 
       // Three accounts should have been added
       expect(numberOfAccountsAdded).to.equal(3);
@@ -42,8 +42,8 @@ describe('CoreWallet', () => {
 
     it('can export the private key of an account', async () => {
       // Export the private key of the first account
-      const firstAccount = coreWallet.getAccounts()[0];
-      const privateKey = await coreWallet.exportAccountPrivateKeyAsync(firstAccount, password);
+      const firstAccount = lightWallet.getAccounts()[0];
+      const privateKey = await lightWallet.exportAccountPrivateKeyAsync(firstAccount, password);
 
       // Private key should be 64 chars long
       expect(privateKey.length).to.equal(64);
@@ -51,7 +51,7 @@ describe('CoreWallet', () => {
 
     it('can export the seed phrase', async () => {
         // Export the seed phrase
-        const seedPhrase = await coreWallet.exportSeedPhraseAsync(password);
+        const seedPhrase = await lightWallet.exportSeedPhraseAsync(password);
 
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
@@ -59,10 +59,10 @@ describe('CoreWallet', () => {
 
     it('can get all accounts', async () => {
       // Add new accounts
-      coreWallet.addNewAccounts(10);
+      lightWallet.addNewAccounts(10);
 
       // Get all accounts
-      const accounts = coreWallet.getAccounts();
+      const accounts = lightWallet.getAccounts();
 
       // There should be 11 accounts (Initial + 10 added)
       expect(accounts.length).to.equal(11);
@@ -70,7 +70,7 @@ describe('CoreWallet', () => {
 
     it('can serialize the wallet', async () => {
       // Serialize the wallet
-      const serializedWallet = coreWallet.serialize();
+      const serializedWallet = lightWallet.serialize();
 
       // Serialized wallet should be a string
       expect(typeof serializedWallet).to.equal('string');

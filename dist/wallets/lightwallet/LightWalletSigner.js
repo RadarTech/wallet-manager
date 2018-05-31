@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const EthereumTx = require("ethereumjs-tx");
-class CoreSigner {
+class LightWalletSigner {
     constructor(keystore, signing, pwDerivedKey) {
         this._keystore = keystore;
         this._signing = signing;
@@ -71,4 +71,4 @@ class CoreSigner {
         });
     }
 }
-exports.CoreSigner = CoreSigner;
+exports.LightWalletSigner = LightWalletSigner;

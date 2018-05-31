@@ -6,23 +6,23 @@ A library that simplifies Ethereum wallet creation.
 
 ### Instantiation
 
-#### Core Wallet Instantiation
+#### LightWallet Instantiation
 
 ```javascript
 // Instantiate the WalletManager
 const walletManager = new WalletManager();
 
-// Create a new core wallet
-const wallet = await walletManager.core.createWalletAsync({ password: 'supersecretpassword99' });
+// Create a new lightwallet
+const wallet = await walletManager.createWalletAsync({ password: 'supersecretpassword99' });
 ```
 
-### Core Wallet Methods
+### LightWallet Methods
 
-### `CoreManager` Methods
+### `LightWalletManager` Methods
 
-#### `walletManager.core.createWalletAsync(options: CoreWalletOptions): Promise<CoreWallet>`
+#### `walletManager.createWalletAsync(options: LightWalletOptions): Promise<LightWallet>`
 
-Create a new core wallet and save it into local storage.
+Create a new lightwallet and save it into local storage.
 
 #### Options
 
@@ -31,42 +31,42 @@ Create a new core wallet and save it into local storage.
 * **salt** (optional) The salt used to encrypt & decrypt the vault. Randomly generated if not supplied.
 * **hdPathString** (optional) A BIP39 compliant HD Path String. Defaults to `m/44'/60'/0'/0`.
 
-#### `walletManager.core.saveWallet(wallet: CoreWallet): void`
+#### `walletManager.saveWallet(wallet: LightWallet): void`
 
-Save the encrypted core wallet to local storage.
+Save the encrypted lightwallet to local storage.
 
-#### `walletManager.core.loadWalletAsync(password: string): Promise<CoreWallet>`
+#### `walletManager.loadWalletAsync(password: string): Promise<LightWallet>`
   
-Load the core wallet from local storage.
+Load the lightwallet from local storage.
 
-### `CoreWallet` Methods
+### `LightWallet` Methods
 
-#### `coreWallet.addNewAccounts(numberOfAccounts: number = 1): void`
+#### `lightWallet.addNewAccounts(numberOfAccounts: number = 1): void`
 
-Adds 1 or more accounts to the core wallet instance and saves the updated wallet into local storage.
+Adds 1 or more accounts to the lightwallet instance and saves the updated wallet into local storage.
 
-#### `coreWallet.exportAccountPrivateKeyAsync(account: string, password: string): Promise<string>`
+#### `lightWallet.exportAccountPrivateKeyAsync(account: string, password: string): Promise<string>`
 
 Exports the private key for a single account.
 
-#### `coreWallet.exportSeedPhraseAsync(password: string): Promise<string>`
+#### `lightWallet.exportSeedPhraseAsync(password: string): Promise<string>`
 
 Exports the wallet's seed phrase.
 
-#### `coreWallet.getAccounts(): string[]`
+#### `lightWallet.getAccounts(): string[]`
 
 Gets all the accounts from the wallet.
 
-#### `coreWallet.serialize(): string`
+#### `lightWallet.serialize(): string`
 
-Serialize the core wallet instance.
+Serialize the lightwallet instance.
 
 ### `Signer` Methods
 
-#### `coreWallet.signer.signPersonalMessageAsync(account: string, message: string): Promise<string>`
+#### `lightWallet.signer.signPersonalMessageAsync(account: string, message: string): Promise<string>`
   
 Sign a message.
 
-#### `coreWallet.signer.signTransactionAsync(txParams: PartialTxParams): Promise<string>`
+#### `lightWallet.signer.signTransactionAsync(txParams: PartialTxParams): Promise<string>`
   
 Sign a transaction.

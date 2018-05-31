@@ -5,23 +5,24 @@ import { WalletManager } from '../../../src/WalletManager';
 import { WalletError } from '../../../src/types';
 import { Store } from '../../../src/Store';
 import { promisify } from '@0xproject/utils';
+import { LightWalletManager } from '../../../src/wallets/LightWallet';
 
 const expect = chai.expect;
 
 /* tslint:disable:no-unused-expression */
-describe('CoreWalletManager', () => {
+describe('LightWalletManager', () => {
     const password = 'supersecretpassword99';
-    const localStorageKey = 'radar-core-wallet';
+    const localStorageKey = 'lightwallet';
 
-    it('can create a new core wallet', async () => {
-        const walletManager = new WalletManager();
-        const coreWallet = await walletManager.core.createWalletAsync({ password });
+    it('can create a new lightwallet', async () => {
+        const walletManager = new LightWalletManager();
+        const lightWallet = await walletManager.createWalletAsync({ password });
 
         // Export the seed phrase
-        const seedPhrase = await coreWallet.exportSeedPhraseAsync(password);
+        const seedPhrase = await lightWallet.exportSeedPhraseAsync(password);
 
         // Get Wallet Accounts
-        const accounts = coreWallet.getAccounts();
+        const accounts = lightWallet.getAccounts();
 
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
@@ -31,20 +32,20 @@ describe('CoreWalletManager', () => {
     });
 
     it('can save and load the wallet from local storage or filesystem', async () => {
-        const walletManager = new WalletManager();
-        let coreWallet = await walletManager.core.createWalletAsync({ password });
+        const walletManager = new LightWalletManager();
+        let lightWallet = await walletManager.createWalletAsync({ password });
 
         // Remove the wallet from memory
-        coreWallet =  null;
+        lightWallet =  null;
 
         // Reload the wallet from local storage
-        coreWallet = await walletManager.core.loadWalletAsync(password);
+        lightWallet = await walletManager.loadWalletAsync(password);
 
         // Export the seed phrase
-        const seedPhrase = await coreWallet.exportSeedPhraseAsync(password);
+        const seedPhrase = await lightWallet.exportSeedPhraseAsync(password);
 
         // Get Wallet Accounts
-        const accounts = coreWallet.getAccounts();
+        const accounts = lightWallet.getAccounts();
 
         // Seed phrase should be 12 words
         expect(seedPhrase.split(' ').length).to.equal(12);
@@ -55,12 +56,12 @@ describe('CoreWalletManager', () => {
 
     it('throws the correct exception when the supplied password is incorrect', async () => {
         const incorrectPassword = 'thewrongpassword99';
-        const walletManager = new WalletManager();
+        const walletManager = new LightWalletManager();
 
         let errorMessage;
         try {
             // Attempt to load the wallet with an incorrect password
-            const coreWallet = await walletManager.core.loadWalletAsync(incorrectPassword);
+            const lightWallet = await walletManager.loadWalletAsync(incorrectPassword);
         } catch (err) {
             errorMessage = err.message;
         }
@@ -78,12 +79,12 @@ describe('CoreWalletManager', () => {
           await fsUnlink('.' + localStorageKey);
         }
 
-        const walletManager = new WalletManager();
+        const walletManager = new LightWalletManager();
 
         let errorMessage;
         try {
             // Attempt to retrieve a wallet that doesn't exist
-            const coreWallet = await walletManager.core.loadWalletAsync(password);
+            const lightWallet = await walletManager.loadWalletAsync(password);
         } catch (err) {
             errorMessage = err.message;
         }

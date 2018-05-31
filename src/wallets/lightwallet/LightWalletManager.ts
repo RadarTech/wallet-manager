@@ -1,19 +1,19 @@
 import * as lightwallet from 'eth-lightwallet';
 import * as _ from 'lodash';
-import { Store } from '../Store';
-import { CoreWalletOptions, WalletError, Wallet, WalletType } from '../types';
-import { DEFAULT_DERIVATION_PATH } from '../constants';
-import { CoreWallet } from '../wallets/CoreWallet';
-import { CoreBase } from '../shared/CoreBase';
+import { Store } from '../../Store';
+import { LightWalletOptions, WalletError, Wallet, WalletType } from '../../types';
+import { DEFAULT_DERIVATION_PATH } from '../../constants';
+import { LightWallet } from './LightWallet';
+import { LightWalletBase } from './LightWalletBase';
 
-export class CoreManager extends CoreBase {
+export class LightWalletManager extends LightWalletBase {
 
   /**
-   * Creates a new core wallet and saves it in local storage
+   * Creates a new lightwallet and saves it in local storage
    *
-   * @param options CoreWallet initialization options
+   * @param options LightWallet initialization options
    */
-  public async createWalletAsync(options: CoreWalletOptions): Promise<CoreWallet> {
+  public async createWalletAsync(options: LightWalletOptions): Promise<LightWallet> {
     const filledOptions = this.populateMissingOptions(options);
 
     this.throwOnError(WalletError.StorageDisabled);
@@ -24,18 +24,18 @@ export class CoreManager extends CoreBase {
 
     keystore.generateNewAddress(pwDerivedKey, 1);
 
-    const coreWallet = new CoreWallet(keystore, lightwallet.signing, pwDerivedKey);
-    this.store.saveCoreWallet(coreWallet);
-    return coreWallet;
+    const lightWallet = new LightWallet(keystore, lightwallet.signing, pwDerivedKey);
+    this.store.saveWallet(lightWallet);
+    return lightWallet;
   }
 
   /**
    * Save the wallet
    *
-   * @param {CoreWallet} wallet The wallet instance
+   * @param {LightWallet} wallet The wallet instance
    */
-  public saveWallet(wallet: CoreWallet): void {
-    if (wallet) this.store.saveCoreWallet(wallet);
+  public saveWallet(wallet: LightWallet): void {
+    if (wallet) this.store.saveWallet(wallet);
   }
 
   /**
@@ -43,26 +43,27 @@ export class CoreManager extends CoreBase {
    *
    * @param {string} password The plaintext password
    */
-  public async loadWalletAsync(password: string): Promise<CoreWallet> {
-    const keystore = this.store.loadCoreWallet();
-    if (!keystore) {
+  public async loadWalletAsync(password: string): Promise<LightWallet> {
+    const serializedKeystore = this.store.loadWallet();
+    if (!serializedKeystore) {
       throw new Error(WalletError.NoWalletFound);
     }
 
+    const keystore = lightwallet.keystore.deserialize(serializedKeystore);
     const pwDerivedKey: Uint8Array = await this.deriveKeyFromPasswordAsync(keystore, password);
     this.validatePwDerivedKeyOrThrow(pwDerivedKey, keystore);
 
-    return new CoreWallet(keystore, lightwallet.signing, pwDerivedKey);
+    return new LightWallet(keystore, lightwallet.signing, pwDerivedKey);
   }
 
   /**
    * Initializes a new eth-lightwallet keystore
    *
-   * @param {CoreWalletOptions} options CoreWallet initialization options
+   * @param {LightWalletOptions} options LightWallet initialization options
    */
-  private async initializeKeystoreAsync(options: CoreWalletOptions): Promise<lightwallet.keystore> {
+  private async initializeKeystoreAsync(options: LightWalletOptions): Promise<lightwallet.keystore> {
     return new Promise<lightwallet.keystore>(resolve => {
-      // Create CoreWallet
+      // Create LightWallet
       lightwallet.keystore.createVault(options, (err, keystore) => {
           resolve(keystore);
       });
@@ -72,9 +73,9 @@ export class CoreManager extends CoreBase {
   /**
    * Populate the missing wallet options
    *
-   * @param {CoreWalletOptions} options CoreWallet initialization options
+   * @param {LightWalletOptions} options LightWallet initialization options
    */
-  private populateMissingOptions(options: CoreWalletOptions): CoreWalletOptions {
+  private populateMissingOptions(options: LightWalletOptions): LightWalletOptions {
     if (_.isUndefined(options.hdPathString)) {
       options.hdPathString = DEFAULT_DERIVATION_PATH;
     }

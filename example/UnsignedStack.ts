@@ -1,4 +1,4 @@
-import { CoreTransactionManager } from './TransactionManager';
+import { LightWalletTransactionManager } from './TransactionManager';
 import { UnsignedPayload, PayloadType, PartialTxParams } from '../src/types';
 import { updateUI } from './UIHelper';
 

@@ -1,9 +1,9 @@
 import { WalletManager } from '../src/WalletManager';
 import { Web3Builder } from 'web3-builder';
 import { PassThroughWalletSubprovider } from 'subproviders';
-import { CoreTransactionManager } from './TransactionManager';
+import { LightWalletTransactionManager } from './TransactionManager';
 import { InfuraNetwork } from '../src/types';
-import { CoreWallet } from '../src/wallets/CoreWallet';
+import { LightWallet, LightWalletManager } from '../src/wallets/LightWallet';
 import { promisify } from '@0xproject/utils';
 import { Web3 } from './Web3';
 
@@ -15,19 +15,19 @@ const initWeb3Button = document.getElementById('initWeb3') as HTMLButtonElement;
 const callWeb3SignButton = document.getElementById('callWeb3Sign') as HTMLButtonElement;
 const callWeb3SendTransactionButton = document.getElementById('callWeb3SendTransaction') as HTMLButtonElement;
 
-let wallet: CoreWallet;
+let wallet: LightWallet;
 const history: any[] = [];
 
 /**
- * Creates a new core wallet instance
+ * Creates a new lightwallet instance
  *
  */
-w.createNewCoreWalletAsync = async () => {
+w.createNewLightWalletAsync = async () => {
   // Instantiate the WalletManager
-  const walletManager = new WalletManager();
+  const walletManager = new LightWalletManager();
 
-  // Create a new core wallet
-  wallet = await walletManager.core.createWalletAsync({ password: 'supersecretpassword99' });
+  // Create a new lightwallet
+  wallet = await walletManager.createWalletAsync({ password: 'supersecretpassword99' });
 
   // Display active address
   activeAddressSpan.innerHTML = wallet.getAccounts()[0];
@@ -44,8 +44,8 @@ w.initializeWeb3 = () => {
   // Instantiate the Web3Builder
   const web3Builder = new Web3Builder();
 
-  // Instantiate the TransactionManager. Pass the core wallet instance into the constructor.
-  const transactionManager = new CoreTransactionManager(wallet);
+  // Instantiate the TransactionManager. Pass the lightwallet instance into the constructor.
+  const transactionManager = new LightWalletTransactionManager(wallet);
 
   // Instantiate the PassThroughWalletSubprovider. Pass the TransactionManager instance into the constructor.
   const walletSubprovider = new PassThroughWalletSubprovider(transactionManager);

@@ -1,8 +1,8 @@
 import { keystore } from 'eth-lightwallet';
-import { Store } from '../Store';
-import { WalletError } from '../types';
+import { Store } from '../../Store';
+import { WalletError } from '../../types';
 
-export class CoreBase {
+export class LightWalletBase {
   protected store: Store;
 
   constructor() {

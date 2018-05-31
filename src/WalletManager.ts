@@ -1,10 +1,7 @@
-import { CoreManager } from './managers/CoreManager';
-import { CoreWallet } from './wallets/CoreWallet';
+export class WalletManager<T> {
+  public manager: T;
 
-export class WalletManager {
-  public core: CoreManager;
-
-  constructor() {
-    this.core = new CoreManager();
+  constructor(Manager: new () => T) {
+    this.manager = new Manager();
   }
 }

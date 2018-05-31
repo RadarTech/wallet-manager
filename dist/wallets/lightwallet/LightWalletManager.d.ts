@@ -1,35 +1,35 @@
-import { CoreWalletOptions } from '../types';
-import { CoreWallet } from '../wallets/CoreWallet';
-import { CoreBase } from '../shared/CoreBase';
-export declare class CoreManager extends CoreBase {
+import { LightWalletOptions } from '../../types';
+import { LightWallet } from './LightWallet';
+import { LightWalletBase } from './LightWalletBase';
+export declare class LightWalletManager extends LightWalletBase {
     /**
-     * Creates a new core wallet and saves it in local storage
+     * Creates a new lightwallet and saves it in local storage
      *
-     * @param options CoreWallet initialization options
+     * @param options LightWallet initialization options
      */
-    createWalletAsync(options: CoreWalletOptions): Promise<CoreWallet>;
+    createWalletAsync(options: LightWalletOptions): Promise<LightWallet>;
     /**
      * Save the wallet
      *
-     * @param {CoreWallet} wallet The wallet instance
+     * @param {LightWallet} wallet The wallet instance
      */
-    saveWallet(wallet: CoreWallet): void;
+    saveWallet(wallet: LightWallet): void;
     /**
      * Loads a wallet from local storage
      *
      * @param {string} password The plaintext password
      */
-    loadWalletAsync(password: string): Promise<CoreWallet>;
+    loadWalletAsync(password: string): Promise<LightWallet>;
     /**
      * Initializes a new eth-lightwallet keystore
      *
-     * @param {CoreWalletOptions} options CoreWallet initialization options
+     * @param {LightWalletOptions} options LightWallet initialization options
      */
     private initializeKeystoreAsync(options);
     /**
      * Populate the missing wallet options
      *
-     * @param {CoreWalletOptions} options CoreWallet initialization options
+     * @param {LightWalletOptions} options LightWallet initialization options
      */
     private populateMissingOptions(options);
     /**

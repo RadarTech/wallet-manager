@@ -1,6 +1,6 @@
 import { keystore } from 'eth-lightwallet';
-import { Store } from '../Store';
-export declare class CoreBase {
+import { Store } from '../../Store';
+export declare class LightWalletBase {
     protected store: Store;
     constructor();
     /**

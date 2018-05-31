@@ -4,9 +4,9 @@ import * as EthereumTx from 'ethereumjs-tx';
 import * as lightwallet from 'eth-lightwallet';
 import Semaphore from 'semaphore-async-await';
 import { assert } from '@0xproject/assert';
-import { ECSignatureBuffer, PartialTxParams, JSONRPCPayload, Signer } from '../types';
+import { ECSignatureBuffer, PartialTxParams, JSONRPCPayload, Signer } from '../../types';
 
-export class CoreSigner implements Signer {
+export class LightWalletSigner implements Signer {
   private _keystore: any;
   private _signing: any;
   private _pwDerivedKey: Uint8Array;

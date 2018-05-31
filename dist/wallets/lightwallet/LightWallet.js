@@ -8,17 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const CoreSigner_1 = require("../signers/CoreSigner");
-const types_1 = require("../types");
-const CoreBase_1 = require("../shared/CoreBase");
-class CoreWallet extends CoreBase_1.CoreBase {
+const LightWalletSigner_1 = require("./LightWalletSigner");
+const types_1 = require("../../types");
+const LightWalletBase_1 = require("./LightWalletBase");
+class LightWallet extends LightWalletBase_1.LightWalletBase {
     constructor(keystore, signing, pwDerivedKey) {
         super();
-        this._keystore = keystore;
-        this._signing = signing;
-        this._pwDerivedKey = pwDerivedKey;
-        this.type = types_1.WalletType.Core;
-        this.signer = new CoreSigner_1.CoreSigner(keystore, signing, pwDerivedKey);
+        this.keystore = keystore;
+        this.signing = signing;
+        this.pwDerivedKey = pwDerivedKey;
+        this.type = types_1.WalletType.LightWallet;
+        this.signer = new LightWalletSigner_1.LightWalletSigner(keystore, signing, pwDerivedKey);
     }
     /**
      * Adds one or more accounts to the wallet
@@ -26,15 +26,15 @@ class CoreWallet extends CoreBase_1.CoreBase {
      * @param {number} [numberOfAccounts=1] The number of accounts to add
      */
     addNewAccounts(numberOfAccounts = 1) {
-        this._keystore.generateNewAddress(this._pwDerivedKey, numberOfAccounts);
-        this.store.saveCoreWallet(this);
+        this.keystore.generateNewAddress(this.pwDerivedKey, numberOfAccounts);
+        this.store.saveWallet(this);
     }
     /**
      * Gets all the accounts from the wallet
      *
      */
     getAccounts() {
-        const accounts = this._keystore.getAddresses();
+        const accounts = this.keystore.getAddresses();
         return accounts;
     }
     /**
@@ -42,7 +42,7 @@ class CoreWallet extends CoreBase_1.CoreBase {
      *
      */
     serialize() {
-        return this._keystore.serialize();
+        return this.keystore.serialize();
     }
     /**
      * Exports the wallet's seed phrase
@@ -51,9 +51,9 @@ class CoreWallet extends CoreBase_1.CoreBase {
      */
     exportSeedPhraseAsync(password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(this._keystore, password);
-            this.validatePwDerivedKeyOrThrow(pwDerivedKey, this._keystore);
-            return this._keystore.getSeed(pwDerivedKey);
+            const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(this.keystore, password);
+            this.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
+            return this.keystore.getSeed(pwDerivedKey);
         });
     }
     /**
@@ -64,10 +64,10 @@ class CoreWallet extends CoreBase_1.CoreBase {
      */
     exportAccountPrivateKeyAsync(account, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(this._keystore, password);
-            this.validatePwDerivedKeyOrThrow(pwDerivedKey, this._keystore);
-            return this._keystore.exportPrivateKey(account, pwDerivedKey);
+            const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(this.keystore, password);
+            this.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
+            return this.keystore.exportPrivateKey(account, pwDerivedKey);
         });
     }
 }
-exports.CoreWallet = CoreWallet;
+exports.LightWallet = LightWallet;

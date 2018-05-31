@@ -16,7 +16,7 @@ import { UnsignedStack } from './UnsignedStack';
 // signTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
 // signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
 
-export class CoreTransactionManager implements TransactionManager {
+export class LightWalletTransactionManager implements TransactionManager {
   private _wallet: Wallet;
   private _unsignedStack: UnsignedStack;
 

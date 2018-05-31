@@ -1,5 +1,5 @@
 /// <reference types="node" />
-export interface CoreWalletOptions {
+export interface LightWalletOptions {
     password: string;
     seedPhrase?: string;
     salt?: string;
@@ -41,6 +41,7 @@ export interface Wallet {
     type: WalletType;
     signer: Signer;
     getAccounts(): string[];
+    serialize(): string;
 }
 export interface TransactionManager {
     getAccounts(): string[];
@@ -62,8 +63,7 @@ export declare enum SigningError {
     UserDeclined = "USER_DECLINED",
 }
 export declare enum WalletType {
-    Core = 0,
-    Ledger = 1,
+    LightWallet = 0,
 }
 export declare type ErrorCallback = (err: Error | null, data?: any) => void;
 export declare type Callback = () => void;

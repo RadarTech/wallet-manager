@@ -19,8 +19,7 @@ var SigningError;
 })(SigningError = exports.SigningError || (exports.SigningError = {}));
 var WalletType;
 (function (WalletType) {
-    WalletType[WalletType["Core"] = 0] = "Core";
-    WalletType[WalletType["Ledger"] = 1] = "Ledger";
+    WalletType[WalletType["LightWallet"] = 0] = "LightWallet";
 })(WalletType = exports.WalletType || (exports.WalletType = {}));
 var NonceSubproviderErrors;
 (function (NonceSubproviderErrors) {

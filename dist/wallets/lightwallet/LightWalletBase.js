@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Store_1 = require("../Store");
-const types_1 = require("../types");
-class CoreBase {
+const Store_1 = require("../../Store");
+const types_1 = require("../../types");
+class LightWalletBase {
     constructor() {
         this.store = new Store_1.Store();
     }
@@ -42,4 +42,4 @@ class CoreBase {
         }
     }
 }
-exports.CoreBase = CoreBase;
+exports.LightWalletBase = LightWalletBase;

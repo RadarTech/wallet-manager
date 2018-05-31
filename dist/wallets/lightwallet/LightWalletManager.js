@@ -10,16 +10,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const lightwallet = require("eth-lightwallet");
 const _ = require("lodash");
-const Store_1 = require("../Store");
-const types_1 = require("../types");
-const constants_1 = require("../constants");
-const CoreWallet_1 = require("../wallets/CoreWallet");
-const CoreBase_1 = require("../shared/CoreBase");
-class CoreManager extends CoreBase_1.CoreBase {
+const Store_1 = require("../../Store");
+const types_1 = require("../../types");
+const constants_1 = require("../../constants");
+const LightWallet_1 = require("./LightWallet");
+const LightWalletBase_1 = require("./LightWalletBase");
+class LightWalletManager extends LightWalletBase_1.LightWalletBase {
     /**
-     * Creates a new core wallet and saves it in local storage
+     * Creates a new lightwallet and saves it in local storage
      *
-     * @param options CoreWallet initialization options
+     * @param options LightWallet initialization options
      */
     createWalletAsync(options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29,19 +29,19 @@ class CoreManager extends CoreBase_1.CoreBase {
             const keystore = yield this.initializeKeystoreAsync(filledOptions);
             const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(keystore, options.password);
             keystore.generateNewAddress(pwDerivedKey, 1);
-            const coreWallet = new CoreWallet_1.CoreWallet(keystore, lightwallet.signing, pwDerivedKey);
-            this.store.saveCoreWallet(coreWallet);
-            return coreWallet;
+            const lightWallet = new LightWallet_1.LightWallet(keystore, lightwallet.signing, pwDerivedKey);
+            this.store.saveWallet(lightWallet);
+            return lightWallet;
         });
     }
     /**
      * Save the wallet
      *
-     * @param {CoreWallet} wallet The wallet instance
+     * @param {LightWallet} wallet The wallet instance
      */
     saveWallet(wallet) {
         if (wallet)
-            this.store.saveCoreWallet(wallet);
+            this.store.saveWallet(wallet);
     }
     /**
      * Loads a wallet from local storage
@@ -50,24 +50,25 @@ class CoreManager extends CoreBase_1.CoreBase {
      */
     loadWalletAsync(password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const keystore = this.store.loadCoreWallet();
-            if (!keystore) {
+            const serializedKeystore = this.store.loadWallet();
+            if (!serializedKeystore) {
                 throw new Error(types_1.WalletError.NoWalletFound);
             }
+            const keystore = lightwallet.keystore.deserialize(serializedKeystore);
             const pwDerivedKey = yield this.deriveKeyFromPasswordAsync(keystore, password);
             this.validatePwDerivedKeyOrThrow(pwDerivedKey, keystore);
-            return new CoreWallet_1.CoreWallet(keystore, lightwallet.signing, pwDerivedKey);
+            return new LightWallet_1.LightWallet(keystore, lightwallet.signing, pwDerivedKey);
         });
     }
     /**
      * Initializes a new eth-lightwallet keystore
      *
-     * @param {CoreWalletOptions} options CoreWallet initialization options
+     * @param {LightWalletOptions} options LightWallet initialization options
      */
     initializeKeystoreAsync(options) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise(resolve => {
-                // Create CoreWallet
+                // Create LightWallet
                 lightwallet.keystore.createVault(options, (err, keystore) => {
                     resolve(keystore);
                 });
@@ -77,7 +78,7 @@ class CoreManager extends CoreBase_1.CoreBase {
     /**
      * Populate the missing wallet options
      *
-     * @param {CoreWalletOptions} options CoreWallet initialization options
+     * @param {LightWalletOptions} options LightWallet initialization options
      */
     populateMissingOptions(options) {
         if (_.isUndefined(options.hdPathString)) {
@@ -115,4 +116,4 @@ class CoreManager extends CoreBase_1.CoreBase {
         }
     }
 }
-exports.CoreManager = CoreManager;
+exports.LightWalletManager = LightWalletManager;
