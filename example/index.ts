@@ -1,6 +1,6 @@
 import { WalletManager } from '../src/WalletManager';
-import { Web3Builder } from 'web3-builder';
-import { PassThroughWalletSubprovider } from 'subproviders';
+import { Web3Builder } from '@radarrelay/web3-builder';
+import { PassThroughWalletSubprovider } from '@radarrelay/subproviders';
 import { CoreTransactionManager } from './TransactionManager';
 import { InfuraNetwork } from '../src/types';
 import { CoreWallet } from '../src/wallets/CoreWallet';
