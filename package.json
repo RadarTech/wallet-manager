@@ -1,5 +1,5 @@
 {
-  "name": "wallet-manager",
+  "name": "@radarrelay/wallet-manager",
   "version": "0.2.0",
   "description": "A library that simplifies Ethereum wallet creation.",
   "main": "dist/index.js",
@@ -28,5 +28,17 @@
   "dependencies": {
     "eth-lightwallet": "^3.0.1",
     "lodash": "^4.17.10"
-  }
+  },
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RadarRelay/wallet-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RadarRelay/wallet-manager/issues"
+  },
+  "homepage": "https://github.com/RadarRelay/wallet-manager#readme"
 }
