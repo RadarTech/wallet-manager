@@ -7,37 +7,26 @@
   "scripts": {
     "test": "tsc -p tsconfig.test.json && mocha --require mock-local-storage dist-test/**/*.test.js",
     "build": "tsc",
-    "build-example": "tsc -p tsconfig.example.json && browserify ./dist-example/example/index.js | uglifyjs > ./dist-example/bundle.js"
+    "lint": "tslint src/**/*.ts",
+    "prepublishOnly" : "npm test && npm run lint"
   },
   "keywords": [],
   "author": "Radar Relay <dev@radarrelay.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.0.4",
-    "@types/es6-promisify": "^6.0.0",
     "@types/lodash": "^4.14.109",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.46",
-    "browserify": "^16.1.1",
     "chai": "^3.5.0",
-    "dotenv": "^4.0.0",
     "mocha": "^3.1.2",
     "tslint": "^5.8.0",
     "tslint-config-0xproject": "0.0.2",
     "typescript": "^2.5.3",
-    "uglify-es": "^3.3.9",
-    "web3-typescript-typings": "^0.10.2"
+    "mock-local-storage": "^1.0.5"
   },
   "dependencies": {
-    "@0xproject/assert": "^0.1.0",
-    "es6-promisify": "^6.0.0",
     "eth-lightwallet": "^3.0.1",
-    "lodash": "^4.17.10",
-    "mock-local-storage": "^1.0.5",
-    "semaphore-async-await": "^1.5.1",
-    "subproviders": "../subproviders",
-    "web3": "0.20.0",
-    "web3-builder": "../web3-builder",
-    "web3-provider-engine": "14.0.5"
+    "lodash": "^4.17.10"
   }
 }

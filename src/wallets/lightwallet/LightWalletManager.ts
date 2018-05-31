@@ -1,7 +1,7 @@
 import * as lightwallet from 'eth-lightwallet';
 import * as _ from 'lodash';
 import { Store } from '../../Store';
-import { LightWalletOptions, WalletError, Wallet, WalletType } from '../../types';
+import { LightWalletOptions, WalletError } from '../../types';
 import { DEFAULT_DERIVATION_PATH } from '../../constants';
 import { LightWallet } from './LightWallet';
 import { LightWalletBase } from './LightWalletBase';

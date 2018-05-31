@@ -1,5 +1,3 @@
-import { keystore, signing } from 'eth-lightwallet';
-
 export interface LightWalletOptions {
   password: string;
   seedPhrase?: string;

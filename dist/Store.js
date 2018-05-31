@@ -1,23 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require("fs");
-const types_1 = require("./types");
-class Store {
+var fs = require("fs");
+var types_1 = require("./types");
+var Store = /** @class */ (function () {
+    function Store() {
+    }
     /**
      * Check for any storage support
      */
-    static IsStorageSupported() {
+    Store.IsStorageSupported = function () {
         return Store.IsFileStorageSupported() || Store.IsLocalStorageSupported();
-    }
+    };
     /**
      * Check if local storage is supported
      *
      */
-    static IsLocalStorageSupported() {
+    Store.IsLocalStorageSupported = function () {
         if (typeof localStorage === 'undefined') {
             return false;
         }
-        const lsSupportTest = 'lsSupportTest';
+        var lsSupportTest = 'lsSupportTest';
         try {
             localStorage.setItem(lsSupportTest, lsSupportTest);
             localStorage.removeItem(lsSupportTest);
@@ -26,11 +28,11 @@ class Store {
         catch (err) {
             return false;
         }
-    }
+    };
     /**
      * Check if file storage is supported
      */
-    static IsFileStorageSupported() {
+    Store.IsFileStorageSupported = function () {
         if (typeof fs.writeFileSync === 'undefined')
             return false;
         try {
@@ -41,14 +43,15 @@ class Store {
         catch (err) {
             return false;
         }
-    }
+    };
     /**
      * Save the encrypted wallet in local storage
      *
      * @param {Wallet} wallet The wallet to save
      * @param {string} [keyName='s-wallet'] The key identifier
      */
-    saveWallet(wallet, keyName = 's-wallet') {
+    Store.prototype.saveWallet = function (wallet, keyName) {
+        if (keyName === void 0) { keyName = 's-wallet'; }
         if (Store.IsLocalStorageSupported()) {
             localStorage.setItem(keyName, wallet.serialize());
         }
@@ -59,14 +62,15 @@ class Store {
             return false;
         }
         return true;
-    }
+    };
     /**
      * Load the encrypted wallet from local storage
      *
      * @param {string} [keyName='s-wallet']  The key identifier
      */
-    loadWallet(keyName = 's-wallet') {
-        let serializedKeystore = null;
+    Store.prototype.loadWallet = function (keyName) {
+        if (keyName === void 0) { keyName = 's-wallet'; }
+        var serializedKeystore = null;
         if (Store.IsLocalStorageSupported()) {
             serializedKeystore = localStorage.getItem(keyName);
         }
@@ -77,6 +81,7 @@ class Store {
             throw new Error(types_1.WalletError.NoWalletFound);
         }
         return serializedKeystore;
-    }
-}
+    };
+    return Store;
+}());
 exports.Store = Store;
