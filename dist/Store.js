@@ -75,7 +75,12 @@ var Store = /** @class */ (function () {
             serializedKeystore = localStorage.getItem(keyName);
         }
         else if (Store.IsFileStorageSupported()) {
-            serializedKeystore = fs.readFileSync('.' + keyName).toString();
+            try {
+                serializedKeystore = fs.readFileSync('.' + keyName).toString();
+            }
+            catch (err) {
+                throw new Error(types_1.WalletError.NoWalletFound);
+            }
         }
         if (!serializedKeystore) {
             throw new Error(types_1.WalletError.NoWalletFound);

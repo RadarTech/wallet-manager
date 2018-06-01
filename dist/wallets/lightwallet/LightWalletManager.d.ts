@@ -25,23 +25,23 @@ export declare class LightWalletManager extends LightWalletBase {
      *
      * @param {LightWalletOptions} options LightWallet initialization options
      */
-    private initializeKeystoreAsync;
+    private initializeKeystoreAsync(options);
     /**
      * Populate the missing wallet options
      *
      * @param {LightWalletOptions} options LightWallet initialization options
      */
-    private populateMissingOptions;
+    private populateMissingOptions(options);
     /**
      * Throw the appropriate exception on error
      *
      * @param {WalletError[]} errors An array of possible WalletErrors
      */
-    private throwOnError;
+    private throwOnError(...errors);
     /**
      * Validate the seed or throw an InvalidSeed exception
      *
      * @param {string} seed The seed to validate
      */
-    private validateSeedPhraseOrThrow;
+    private validateSeedPhraseOrThrow(seed);
 }
