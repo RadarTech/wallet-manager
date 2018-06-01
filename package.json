@@ -1,6 +1,6 @@
 {
   "name": "@radarrelay/wallet-manager",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A library that simplifies Ethereum wallet creation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,10 @@
     "lint": "tslint src/**/*.ts",
     "prepublishOnly": "npm test && npm run lint"
   },
-  "keywords": [],
+  "keywords": [
+    "ethereum",
+    "wallet"
+  ],
   "author": "Radar Relay <dev@radarrelay.com>",
   "license": "MIT",
   "devDependencies": {
@@ -30,7 +33,6 @@
     "lodash": "^4.17.10"
   },
   "directories": {
-    "example": "example",
     "test": "test"
   },
   "repository": {
