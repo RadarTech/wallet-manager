@@ -2,27 +2,36 @@
 
 A library that simplifies Ethereum wallet creation.
 
-## Usage
+## Installation
+
+### npm
+
+```
+npm install @radarrelay/wallet-manager
+```
+
+### Yarn
+
+```
+yarn add @radarrelay/wallet-manager
+```
+
+## LightWallet Usage
 
 ### Instantiation
 
-#### LightWallet Instantiation
-
 ```javascript
-// Instantiate the WalletManager
-const walletManager = new WalletManager();
+import { LightWalletManager } from '@radarrelay/wallet-manager';
 
-// Create a new lightwallet
-const wallet = await walletManager.createWalletAsync({ password: 'supersecretpassword99' });
+// Instantiate the LightWalletManager
+const walletManager = new LightWalletManager();
 ```
 
-### LightWallet Methods
+### LightWalletManager Methods
 
-### `LightWalletManager` Methods
+**Create a new wallet**
 
-#### `walletManager.createWalletAsync(options: LightWalletOptions): Promise<LightWallet>`
-
-Create a new lightwallet and save it into local storage.
+Create a new lightwallet and save it into local storage or as a file.
 
 #### Options
 
@@ -30,43 +39,87 @@ Create a new lightwallet and save it into local storage.
 * **seedPhrase** (optional) A twelve-word mnemonic used to generate all accounts. Randomly generated if not supplied.
 * **salt** (optional) The salt used to encrypt & decrypt the vault. Randomly generated if not supplied.
 * **hdPathString** (optional) A BIP39 compliant HD Path String. Defaults to `m/44'/60'/0'/0`.
+* **storageKeyName** (optional) The local storage key or file name.
 
-#### `walletManager.saveWallet(wallet: LightWallet): void`
+```javascript
+const lightWallet = await walletManager.createWalletAsync(options: LightWalletOptions): Promise<LightWallet>
+```
 
-Save the encrypted lightwallet to local storage.
+**Save an existing wallet**
 
-#### `walletManager.loadWalletAsync(password: string): Promise<LightWallet>`
-  
-Load the lightwallet from local storage.
+Save the encrypted lightwallet into local storage or as a file.
 
-### `LightWallet` Methods
+```javascript
+walletManager.saveWallet(wallet: LightWallet): void
+```
 
-#### `lightWallet.addNewAccounts(numberOfAccounts: number = 1): void`
+**Load an existing wallet**
 
-Adds 1 or more accounts to the lightwallet instance and saves the updated wallet into local storage.
+Load the lightwallet from local storage or the file system.
 
-#### `lightWallet.exportAccountPrivateKeyAsync(account: string, password: string): Promise<string>`
+```javascript
+const lightWallet = await walletManager.loadWalletAsync(password: string): Promise<LightWallet>
+```
+
+
+### LightWallet Methods
+
+Adds 1 or more accounts to the lightwallet instance and saves the updated wallet.
+
+**Add new accounts**
+
+```javascript
+lightWallet.addNewAccounts(numberOfAccounts: number = 1): void
+```
+
+**Export private key**
 
 Exports the private key for a single account.
 
-#### `lightWallet.exportSeedPhraseAsync(password: string): Promise<string>`
+```javascript
+const privateKey = lightWallet.exportAccountPrivateKeyAsync(account: string, password: string): Promise<string>
+```
+
+**Export seed phrase**
 
 Exports the wallet's seed phrase.
 
-#### `lightWallet.getAccounts(): string[]`
+```javascript
+const seedPhrase = await lightWallet.exportSeedPhraseAsync(password: string): Promise<string>
+```
+
+**Get accounts**
 
 Gets all the accounts from the wallet.
 
-#### `lightWallet.serialize(): string`
+```javascript
+const accounts = lightWallet.getAccounts(): string[]
+```
 
-Serialize the lightwallet instance.
+**Serialize**
 
-### `Signer` Methods
+Serialize the encrypted lightwallet.
 
-#### `lightWallet.signer.signPersonalMessageAsync(account: string, message: string): Promise<string>`
-  
-Sign a message.
+```javascript
+const serializedWallet = lightWallet.serialize(): string
+```
 
-#### `lightWallet.signer.signTransactionAsync(txParams: PartialTxParams): Promise<string>`
-  
-Sign a transaction.
+### Signer Methods
+
+**Sign a message**
+
+```javascript
+const signedMsg = await lightWallet.signer.signPersonalMessageAsync(account: string, message: string): Promise<string>
+```
+
+**Sign a message hash**
+
+```javascript
+const signedMsgHash = await lightWallet.signer.signPersonalMessageHashAsync(account: string, messageHash: string): Promise<string>
+```
+
+**Sign a transaction**
+
+```javascript
+const signedTx = await lightWallet.signer.signTransactionAsync(txParams: PartialTxParams): Promise<string>
+```
