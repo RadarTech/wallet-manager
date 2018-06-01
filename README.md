@@ -33,7 +33,7 @@ const walletManager = new LightWalletManager();
 
 Create a new lightwallet and save it into local storage or as a file.
 
-#### Options
+Options:
 
 * **password** (mandatory) A string used to encrypt the vault when serialized.
 * **seedPhrase** (optional) A twelve-word mnemonic used to generate all accounts. Randomly generated if not supplied.
@@ -64,9 +64,9 @@ const lightWallet = await walletManager.loadWalletAsync(password: string): Promi
 
 ### LightWallet Methods
 
-Adds 1 or more accounts to the lightwallet instance and saves the updated wallet.
-
 **Add new accounts**
+
+Adds 1 or more accounts to the lightwallet instance and saves the updated wallet.
 
 ```javascript
 lightWallet.addNewAccounts(numberOfAccounts: number = 1): void
