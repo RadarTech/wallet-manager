@@ -1,23 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lightwallet = require("eth-lightwallet");
-const fs = require("fs");
-class Store {
+var fs = require("fs");
+var types_1 = require("./types");
+var Store = /** @class */ (function () {
+    function Store() {
+    }
     /**
      * Check for any storage support
      */
-    static IsStorageSupported() {
+    Store.IsStorageSupported = function () {
         return Store.IsFileStorageSupported() || Store.IsLocalStorageSupported();
-    }
+    };
     /**
      * Check if local storage is supported
      *
      */
-    static IsLocalStorageSupported() {
+    Store.IsLocalStorageSupported = function () {
         if (typeof localStorage === 'undefined') {
             return false;
         }
-        const lsSupportTest = 'lsSupportTest';
+        var lsSupportTest = 'lsSupportTest';
         try {
             localStorage.setItem(lsSupportTest, lsSupportTest);
             localStorage.removeItem(lsSupportTest);
@@ -26,11 +28,11 @@ class Store {
         catch (err) {
             return false;
         }
-    }
+    };
     /**
      * Check if file storage is supported
      */
-    static IsFileStorageSupported() {
+    Store.IsFileStorageSupported = function () {
         if (typeof fs.writeFileSync === 'undefined')
             return false;
         try {
@@ -41,14 +43,15 @@ class Store {
         catch (err) {
             return false;
         }
-    }
+    };
     /**
      * Save the encrypted wallet in local storage
      *
-     * @param {CoreWallet} wallet The wallet to save
-     * @param {string} [keyName='radar-core-wallet'] The key identifier
+     * @param {Wallet} wallet The wallet to save
+     * @param {string} [keyName='s-wallet'] The key identifier
      */
-    saveCoreWallet(wallet, keyName = 'radar-core-wallet') {
+    Store.prototype.saveWallet = function (wallet, keyName) {
+        if (keyName === void 0) { keyName = 's-wallet'; }
         if (Store.IsLocalStorageSupported()) {
             localStorage.setItem(keyName, wallet.serialize());
         }
@@ -59,25 +62,26 @@ class Store {
             return false;
         }
         return true;
-    }
+    };
     /**
      * Load the encrypted wallet from local storage
      *
-     * @param {string} [keyName='radar-core-wallet']  The key identifier
+     * @param {string} [keyName='s-wallet']  The key identifier
      */
-    loadCoreWallet(keyName = 'radar-core-wallet') {
-        let keystore = null;
-        let serializedKeystore = null;
+    Store.prototype.loadWallet = function (keyName) {
+        if (keyName === void 0) { keyName = 's-wallet'; }
+        var serializedKeystore = null;
         if (Store.IsLocalStorageSupported()) {
             serializedKeystore = localStorage.getItem(keyName);
         }
         else if (Store.IsFileStorageSupported()) {
             serializedKeystore = fs.readFileSync('.' + keyName).toString();
         }
-        if (serializedKeystore) {
-            keystore = lightwallet.keystore.deserialize(serializedKeystore);
+        if (!serializedKeystore) {
+            throw new Error(types_1.WalletError.NoWalletFound);
         }
-        return keystore;
-    }
-}
+        return serializedKeystore;
+    };
+    return Store;
+}());
 exports.Store = Store;

@@ -1,6 +1,5 @@
-import * as lightwallet from 'eth-lightwallet';
-import { CoreWallet } from './wallets/CoreWallet';
 import * as fs from 'fs';
+import { Wallet, WalletError } from './types';
 
 export class Store {
 
@@ -48,10 +47,10 @@ export class Store {
  /**
   * Save the encrypted wallet in local storage
   *
-  * @param {CoreWallet} wallet The wallet to save
-  * @param {string} [keyName='radar-core-wallet'] The key identifier
+  * @param {Wallet} wallet The wallet to save
+  * @param {string} [keyName='s-wallet'] The key identifier
   */
-  public saveCoreWallet(wallet: CoreWallet, keyName: string = 'radar-core-wallet') {
+  public saveWallet(wallet: Wallet, keyName: string = 's-wallet') {
     if (Store.IsLocalStorageSupported()) {
       localStorage.setItem(keyName, wallet.serialize());
     } else if (Store.IsFileStorageSupported) {
@@ -66,22 +65,20 @@ export class Store {
  /**
   * Load the encrypted wallet from local storage
   *
-  * @param {string} [keyName='radar-core-wallet']  The key identifier
+  * @param {string} [keyName='s-wallet']  The key identifier
   */
-  public loadCoreWallet(keyName: string = 'radar-core-wallet') {
-    let keystore = null;
+  public loadWallet(keyName: string = 's-wallet') {
     let serializedKeystore = null;
-
     if (Store.IsLocalStorageSupported()) {
       serializedKeystore = localStorage.getItem(keyName);
     } else if (Store.IsFileStorageSupported()) {
       serializedKeystore = fs.readFileSync('.' + keyName).toString();
     }
 
-    if (serializedKeystore) {
-      keystore = lightwallet.keystore.deserialize(serializedKeystore);
+    if (!serializedKeystore) {
+      throw new Error(WalletError.NoWalletFound);
     }
 
-    return keystore;
+    return serializedKeystore;
   }
 }

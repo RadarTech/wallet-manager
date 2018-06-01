@@ -1,6 +1,6 @@
 import * as lightwallet from 'eth-lightwallet';
-import { PartialTxParams, Signer } from '../types';
-export declare class CoreSigner implements Signer {
+import { PartialTxParams, Signer } from '../../types';
+export declare class LightWalletSigner implements Signer {
     private _keystore;
     private _signing;
     private _pwDerivedKey;

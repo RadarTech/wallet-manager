@@ -1,13 +1,13 @@
-import { CoreSigner } from '../signers/CoreSigner';
-import { Wallet, WalletType } from '../types';
+import { LightWalletSigner } from './LightWalletSigner';
+import { Wallet, WalletType } from '../../types';
 import { keystore, signing } from 'eth-lightwallet';
-import { CoreBase } from '../shared/CoreBase';
-export declare class CoreWallet extends CoreBase implements Wallet {
+import { LightWalletBase } from './LightWalletBase';
+export declare class LightWallet extends LightWalletBase implements Wallet {
     type: WalletType;
-    signer: CoreSigner;
-    private _keystore;
-    private _signing;
-    private _pwDerivedKey;
+    signer: LightWalletSigner;
+    keystore: keystore;
+    signing: signing;
+    pwDerivedKey: Uint8Array;
     constructor(keystore: keystore, signing: signing, pwDerivedKey: Uint8Array);
     /**
      * Adds one or more accounts to the wallet

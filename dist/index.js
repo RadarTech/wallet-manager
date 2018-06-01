@@ -1,4 +1,4 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var WalletManager_1 = require("./WalletManager");
-exports.WalletManager = WalletManager_1.WalletManager;
+var lightwallet_1 = require("./wallets/lightwallet");
+exports.LightWalletManager = lightwallet_1.LightWalletManager;

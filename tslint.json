@@ -10,6 +10,7 @@
     "curly": [true, "ignore-same-line"],
     "no-namespace": false,
     "no-submodule-imports": false,
-    "no-implicit-dependencies": false
+    "no-implicit-dependencies": false,
+    "class-name": false
   }
 }

@@ -1,10 +1,9 @@
-import { keystore, signing } from 'eth-lightwallet';
-
-export interface CoreWalletOptions {
+export interface LightWalletOptions {
   password: string;
   seedPhrase?: string;
   salt?: string;
   hdPathString?: string;
+  storageKeyName?: string;
 }
 
 export interface ECSignatureBuffer {
@@ -49,6 +48,7 @@ export interface Wallet {
   type: WalletType;
   signer: Signer;
   getAccounts(): string[];
+  serialize(): string;
 }
 
 export interface TransactionManager {
@@ -75,8 +75,7 @@ export enum SigningError {
 }
 
 export enum WalletType {
-  Core,
-  Ledger
+  LightWallet
 }
 
 export type ErrorCallback = (err: Error | null, data?: any) => void;

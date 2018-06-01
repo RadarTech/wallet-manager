@@ -1,4 +1,4 @@
-import { CoreWallet } from './wallets/CoreWallet';
+import { Wallet } from './types';
 export declare class Store {
     /**
      * Check for any storage support
@@ -16,14 +16,14 @@ export declare class Store {
     /**
      * Save the encrypted wallet in local storage
      *
-     * @param {CoreWallet} wallet The wallet to save
-     * @param {string} [keyName='radar-core-wallet'] The key identifier
+     * @param {Wallet} wallet The wallet to save
+     * @param {string} [keyName='s-wallet'] The key identifier
      */
-    saveCoreWallet(wallet: CoreWallet, keyName?: string): boolean;
+    saveWallet(wallet: Wallet, keyName?: string): boolean;
     /**
      * Load the encrypted wallet from local storage
      *
-     * @param {string} [keyName='radar-core-wallet']  The key identifier
+     * @param {string} [keyName='s-wallet']  The key identifier
      */
-    loadCoreWallet(keyName?: string): any;
+    loadWallet(keyName?: string): any;
 }
