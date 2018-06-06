@@ -2,6 +2,9 @@
 
 A library that simplifies Ethereum wallet creation.
 
+[![npm version](https://badge.fury.io/js/%40radarrelay%2Fwallet-manager.svg)](https://badge.fury.io/js/%40radarrelay%2Fwallet-manager)
+[![CircleCI](https://circleci.com/gh/RadarRelay/wallet-manager.svg?style=svg&circle-token=e3f03fa489fe09a00eadb9ec96c617c4f999e58d)](https://circleci.com/gh/RadarRelay/wallet-manager)
+
 ## Installation
 
 ### npm
@@ -123,3 +126,11 @@ const signedMsgHash = await lightWallet.signer.signPersonalMessageHashAsync(acco
 ```javascript
 const signedTx = await lightWallet.signer.signTransactionAsync(txParams: PartialTxParams): Promise<string>
 ```
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
