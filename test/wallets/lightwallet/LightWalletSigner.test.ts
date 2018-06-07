@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import { PartialTxParams } from '../../../src/types';
-import { LightWalletManager } from '../../../src/wallets/LightWallet';
+import { LightWalletManager } from '../../../src/wallets/lightwallet';
 import { LightWalletSigner } from '../../../src/wallets/lightwallet/LightWalletSigner';
 
 const expect = chai.expect;

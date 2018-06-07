@@ -1,5 +1,5 @@
 import * as chai from 'chai';
-import { LightWallet, LightWalletManager } from '../../../src/wallets/LightWallet';
+import { LightWallet, LightWalletManager } from '../../../src/wallets/lightwallet';
 
 const expect = chai.expect;
 

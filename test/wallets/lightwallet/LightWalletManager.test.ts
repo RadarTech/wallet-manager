@@ -2,7 +2,7 @@ import * as chai from 'chai';
 import * as fs from 'fs';
 import { Store } from '../../../src/Store';
 import { WalletError } from '../../../src/types';
-import { LightWalletManager } from '../../../src/wallets/LightWallet';
+import { LightWalletManager } from '../../../src/wallets/lightwallet';
 
 const expect = chai.expect;
 
