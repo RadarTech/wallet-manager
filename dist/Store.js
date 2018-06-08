@@ -8,14 +8,14 @@ var Store = /** @class */ (function () {
     /**
      * Check for any storage support
      */
-    Store.IsStorageSupported = function () {
-        return Store.IsFileStorageSupported() || Store.IsLocalStorageSupported();
+    Store.isStorageSupported = function () {
+        return Store.isFileStorageSupported() || Store.isLocalStorageSupported();
     };
     /**
      * Check if local storage is supported
      *
      */
-    Store.IsLocalStorageSupported = function () {
+    Store.isLocalStorageSupported = function () {
         if (typeof localStorage === 'undefined') {
             return false;
         }
@@ -32,7 +32,7 @@ var Store = /** @class */ (function () {
     /**
      * Check if file storage is supported
      */
-    Store.IsFileStorageSupported = function () {
+    Store.isFileStorageSupported = function () {
         if (typeof fs.writeFileSync === 'undefined')
             return false;
         try {
@@ -50,12 +50,12 @@ var Store = /** @class */ (function () {
      * @param {Wallet} wallet The wallet to save
      * @param {string} [keyName='s-wallet'] The key identifier
      */
-    Store.prototype.saveWallet = function (wallet, keyName) {
+    Store.saveWallet = function (wallet, keyName) {
         if (keyName === void 0) { keyName = 's-wallet'; }
-        if (Store.IsLocalStorageSupported()) {
+        if (Store.isLocalStorageSupported()) {
             localStorage.setItem(keyName, wallet.serialize());
         }
-        else if (Store.IsFileStorageSupported) {
+        else if (Store.isFileStorageSupported) {
             fs.writeFileSync('.' + keyName, wallet.serialize());
         }
         else {
@@ -68,13 +68,13 @@ var Store = /** @class */ (function () {
      *
      * @param {string} [keyName='s-wallet']  The key identifier
      */
-    Store.prototype.loadWallet = function (keyName) {
+    Store.loadWallet = function (keyName) {
         if (keyName === void 0) { keyName = 's-wallet'; }
         var serializedKeystore = null;
-        if (Store.IsLocalStorageSupported()) {
+        if (Store.isLocalStorageSupported()) {
             serializedKeystore = localStorage.getItem(keyName);
         }
-        else if (Store.IsFileStorageSupported()) {
+        else if (Store.isFileStorageSupported()) {
             try {
                 serializedKeystore = fs.readFileSync('.' + keyName).toString();
             }

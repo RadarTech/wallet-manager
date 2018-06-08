@@ -15,7 +15,6 @@ describe('LightWalletSigner', () => {
   let signer: LightWalletSigner;
 
   before(async () => {
-    const walletManager = new LightWalletManager();
     const options = {
       password,
       seedPhrase,
@@ -23,7 +22,7 @@ describe('LightWalletSigner', () => {
       storageKeyName,
       hdPathString: `m/44'/60'/0'`
     };
-    signer = (await walletManager.createWalletAsync(options)).signer;
+    signer = (await LightWalletManager.createWalletAsync(options)).signer;
   });
 
   it('can sign a personal message', async () => {

@@ -52,19 +52,19 @@ export interface TransactionManager {
 export declare enum PayloadType {
     Tx = 0,
     Msg = 1,
-    PersonalMsg = 2,
+    PersonalMsg = 2
 }
 export declare enum WalletError {
     StorageDisabled = "STORAGE_DISABLED",
     NoWalletFound = "NO_WALLET_FOUND",
     InvalidSeed = "INVALID_SEED",
-    InvalidPassword = "INVALID_PASSWORD",
+    InvalidPassword = "INVALID_PASSWORD"
 }
 export declare enum SigningError {
-    UserDeclined = "USER_DECLINED",
+    UserDeclined = "USER_DECLINED"
 }
 export declare enum WalletType {
-    LightWallet = 0,
+    LightWallet = 0
 }
 export declare type ErrorCallback = (err: Error | null, data?: any) => void;
 export declare type Callback = () => void;
@@ -72,11 +72,11 @@ export declare type OnNextCompleted = (err: Error | null, result: any, cb: Callb
 export declare type NextCallback = (callback?: OnNextCompleted) => void;
 export declare enum NonceSubproviderErrors {
     EmptyParametersFound = "EMPTY_PARAMETERS_FOUND",
-    CannotDetermineAddressFromPayload = "CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD",
+    CannotDetermineAddressFromPayload = "CANNOT_DETERMINE_ADDRESS_FROM_PAYLOAD"
 }
 export declare enum InfuraNetwork {
     Mainnet = "mainnet",
     Kovan = "kovan",
     Rinkeby = "rinkeby",
-    Ropsten = "ropsten",
+    Ropsten = "ropsten"
 }

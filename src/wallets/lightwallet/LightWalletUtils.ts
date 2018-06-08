@@ -1,13 +1,7 @@
 import { keystore } from 'eth-lightwallet';
-import { Store } from '../../Store';
 import { WalletError } from '../../types';
 
-export class LightWalletBase {
-  protected store: Store;
-
-  constructor() {
-    this.store = new Store();
-  }
+export class LightWalletUtils {
 
   /**
    * Derives a symmetric key from the plaintext password and salt
@@ -15,7 +9,7 @@ export class LightWalletBase {
    * @param {keystore} keystore The wallet's keystore instance
    * @param {string} password The plaintext password
    */
-  protected async deriveKeyFromPasswordAsync(keystore: keystore, password: string): Promise<Uint8Array> {
+  public static async deriveKeyFromPasswordAsync(keystore: keystore, password: string): Promise<Uint8Array> {
     return new Promise<Uint8Array>(resolve => {
       keystore.keyFromPassword(password, (err, pwDerivedKey: Uint8Array) => {
         resolve(pwDerivedKey);
@@ -29,7 +23,7 @@ export class LightWalletBase {
    * @param {Uint8Array} pwDerivedKey The password derived symmetric key
    * @param {keystore} keystore The lightwallet keystore
    */
-  protected validatePwDerivedKeyOrThrow(pwDerivedKey: Uint8Array, keystore: keystore): void {
+  public static validatePwDerivedKeyOrThrow(pwDerivedKey: Uint8Array, keystore: keystore): void {
     const valid = keystore.isDerivedKeyCorrect(pwDerivedKey);
 
     if (!valid) {

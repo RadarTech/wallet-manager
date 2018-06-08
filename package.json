@@ -7,7 +7,7 @@
   "scripts": {
     "test": "tsc -p tsconfig.test.json && mocha --require mock-local-storage dist-test/**/*.test.js",
     "build": "tsc",
-    "lint": "tslint src/**/*.ts",
+    "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "npm test && npm run lint"
   },
   "keywords": [

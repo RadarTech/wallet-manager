@@ -1,9 +1,10 @@
 import { LightWalletSigner } from './LightWalletSigner';
 import { Wallet, WalletType } from '../../types';
 import { keystore, signing } from 'eth-lightwallet';
-import { LightWalletBase } from './LightWalletBase';
+import { Store } from '../../Store';
+import { LightWalletUtils } from './LightWalletUtils';
 
-export class LightWallet extends LightWalletBase implements Wallet {
+export class LightWallet implements Wallet {
   public type: WalletType;
   public signer: LightWalletSigner;
   public keystore: keystore;
@@ -11,8 +12,6 @@ export class LightWallet extends LightWalletBase implements Wallet {
   public pwDerivedKey: Uint8Array;
 
   constructor(keystore: keystore, signing: signing, pwDerivedKey: Uint8Array) {
-    super();
-
     this.keystore = keystore;
     this.signing = signing;
     this.pwDerivedKey = pwDerivedKey;
@@ -27,7 +26,7 @@ export class LightWallet extends LightWalletBase implements Wallet {
   */
   public addNewAccounts(numberOfAccounts: number = 1): void {
     this.keystore.generateNewAddress(this.pwDerivedKey, numberOfAccounts);
-    this.store.saveWallet(this);
+    Store.saveWallet(this);
   }
 
  /**
@@ -53,8 +52,8 @@ export class LightWallet extends LightWalletBase implements Wallet {
   * @param {string} password The plaintext password
   */
   public async exportSeedPhraseAsync(password: string): Promise<string> {
-    const pwDerivedKey: Uint8Array = await this.deriveKeyFromPasswordAsync(this.keystore, password);
-    this.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
+    const pwDerivedKey: Uint8Array = await LightWalletUtils.deriveKeyFromPasswordAsync(this.keystore, password);
+    LightWalletUtils.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
 
     return this.keystore.getSeed(pwDerivedKey);
   }
@@ -66,8 +65,8 @@ export class LightWallet extends LightWalletBase implements Wallet {
   * @param {string} password The plaintext password
   */
   public async exportAccountPrivateKeyAsync(account: string, password: string): Promise<string> {
-    const pwDerivedKey: Uint8Array = await this.deriveKeyFromPasswordAsync(this.keystore, password);
-    this.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
+    const pwDerivedKey: Uint8Array = await LightWalletUtils.deriveKeyFromPasswordAsync(this.keystore, password);
+    LightWalletUtils.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
 
     return this.keystore.exportPrivateKey(account, pwDerivedKey);
   }

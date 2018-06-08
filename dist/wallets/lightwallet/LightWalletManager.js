@@ -1,14 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -51,18 +41,16 @@ var Store_1 = require("../../Store");
 var types_1 = require("../../types");
 var constants_1 = require("../../constants");
 var LightWallet_1 = require("./LightWallet");
-var LightWalletBase_1 = require("./LightWalletBase");
-var LightWalletManager = /** @class */ (function (_super) {
-    __extends(LightWalletManager, _super);
+var LightWalletUtils_1 = require("./LightWalletUtils");
+var LightWalletManager = /** @class */ (function () {
     function LightWalletManager() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
      * Creates a new lightwallet and saves it in local storage
      *
      * @param options LightWallet initialization options
      */
-    LightWalletManager.prototype.createWalletAsync = function (options) {
+    LightWalletManager.createWalletAsync = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             var filledOptions, keystore, pwDerivedKey, lightWallet;
             return __generator(this, function (_a) {
@@ -74,12 +62,12 @@ var LightWalletManager = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.initializeKeystoreAsync(filledOptions)];
                     case 1:
                         keystore = _a.sent();
-                        return [4 /*yield*/, this.deriveKeyFromPasswordAsync(keystore, options.password)];
+                        return [4 /*yield*/, LightWalletUtils_1.LightWalletUtils.deriveKeyFromPasswordAsync(keystore, options.password)];
                     case 2:
                         pwDerivedKey = _a.sent();
                         keystore.generateNewAddress(pwDerivedKey, 1);
                         lightWallet = new LightWallet_1.LightWallet(keystore, lightwallet.signing, pwDerivedKey);
-                        this.store.saveWallet(lightWallet, options.storageKeyName);
+                        Store_1.Store.saveWallet(lightWallet, options.storageKeyName);
                         return [2 /*return*/, lightWallet];
                 }
             });
@@ -90,27 +78,27 @@ var LightWalletManager = /** @class */ (function (_super) {
      *
      * @param {LightWallet} wallet The wallet instance
      */
-    LightWalletManager.prototype.saveWallet = function (wallet, keyName) {
+    LightWalletManager.saveWallet = function (wallet, keyName) {
         if (wallet)
-            this.store.saveWallet(wallet, keyName);
+            Store_1.Store.saveWallet(wallet, keyName);
     };
     /**
      * Loads a wallet from local storage
      *
      * @param {string} password The plaintext password
      */
-    LightWalletManager.prototype.loadWalletAsync = function (password, keyName) {
+    LightWalletManager.loadWalletAsync = function (password, keyName) {
         return __awaiter(this, void 0, void 0, function () {
             var serializedKeystore, keystore, pwDerivedKey;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        serializedKeystore = this.store.loadWallet(keyName);
+                        serializedKeystore = Store_1.Store.loadWallet(keyName);
                         keystore = lightwallet.keystore.deserialize(serializedKeystore);
-                        return [4 /*yield*/, this.deriveKeyFromPasswordAsync(keystore, password)];
+                        return [4 /*yield*/, LightWalletUtils_1.LightWalletUtils.deriveKeyFromPasswordAsync(keystore, password)];
                     case 1:
                         pwDerivedKey = _a.sent();
-                        this.validatePwDerivedKeyOrThrow(pwDerivedKey, keystore);
+                        LightWalletUtils_1.LightWalletUtils.validatePwDerivedKeyOrThrow(pwDerivedKey, keystore);
                         return [2 /*return*/, new LightWallet_1.LightWallet(keystore, lightwallet.signing, pwDerivedKey)];
                 }
             });
@@ -121,7 +109,7 @@ var LightWalletManager = /** @class */ (function (_super) {
      *
      * @param {LightWalletOptions} options LightWallet initialization options
      */
-    LightWalletManager.prototype.initializeKeystoreAsync = function (options) {
+    LightWalletManager.initializeKeystoreAsync = function (options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve) {
@@ -138,7 +126,7 @@ var LightWalletManager = /** @class */ (function (_super) {
      *
      * @param {LightWalletOptions} options LightWallet initialization options
      */
-    LightWalletManager.prototype.populateMissingOptions = function (options) {
+    LightWalletManager.populateMissingOptions = function (options) {
         if (_.isUndefined(options.hdPathString)) {
             options.hdPathString = constants_1.DEFAULT_DERIVATION_PATH;
         }
@@ -152,7 +140,7 @@ var LightWalletManager = /** @class */ (function (_super) {
      *
      * @param {WalletError[]} errors An array of possible WalletErrors
      */
-    LightWalletManager.prototype.throwOnError = function () {
+    LightWalletManager.throwOnError = function () {
         var errors = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             errors[_i] = arguments[_i];
@@ -161,7 +149,7 @@ var LightWalletManager = /** @class */ (function (_super) {
             var error = errors_1[_a];
             switch (error) {
                 case types_1.WalletError.StorageDisabled:
-                    if (!Store_1.Store.IsStorageSupported())
+                    if (!Store_1.Store.isStorageSupported())
                         throw new Error(types_1.WalletError.StorageDisabled);
                     break;
             }
@@ -172,12 +160,12 @@ var LightWalletManager = /** @class */ (function (_super) {
      *
      * @param {string} seed The seed to validate
      */
-    LightWalletManager.prototype.validateSeedPhraseOrThrow = function (seed) {
+    LightWalletManager.validateSeedPhraseOrThrow = function (seed) {
         var valid = lightwallet.keystore.isSeedValid(seed);
         if (!valid) {
             throw new Error(types_1.WalletError.InvalidSeed);
         }
     };
     return LightWalletManager;
-}(LightWalletBase_1.LightWalletBase));
+}());
 exports.LightWalletManager = LightWalletManager;

@@ -1,14 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -47,17 +37,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var LightWalletSigner_1 = require("./LightWalletSigner");
 var types_1 = require("../../types");
-var LightWalletBase_1 = require("./LightWalletBase");
-var LightWallet = /** @class */ (function (_super) {
-    __extends(LightWallet, _super);
+var Store_1 = require("../../Store");
+var LightWalletUtils_1 = require("./LightWalletUtils");
+var LightWallet = /** @class */ (function () {
     function LightWallet(keystore, signing, pwDerivedKey) {
-        var _this = _super.call(this) || this;
-        _this.keystore = keystore;
-        _this.signing = signing;
-        _this.pwDerivedKey = pwDerivedKey;
-        _this.type = types_1.WalletType.LightWallet;
-        _this.signer = new LightWalletSigner_1.LightWalletSigner(keystore, signing, pwDerivedKey);
-        return _this;
+        this.keystore = keystore;
+        this.signing = signing;
+        this.pwDerivedKey = pwDerivedKey;
+        this.type = types_1.WalletType.LightWallet;
+        this.signer = new LightWalletSigner_1.LightWalletSigner(keystore, signing, pwDerivedKey);
     }
     /**
      * Adds one or more accounts to the wallet
@@ -67,7 +55,7 @@ var LightWallet = /** @class */ (function (_super) {
     LightWallet.prototype.addNewAccounts = function (numberOfAccounts) {
         if (numberOfAccounts === void 0) { numberOfAccounts = 1; }
         this.keystore.generateNewAddress(this.pwDerivedKey, numberOfAccounts);
-        this.store.saveWallet(this);
+        Store_1.Store.saveWallet(this);
     };
     /**
      * Gets all the accounts from the wallet
@@ -94,10 +82,10 @@ var LightWallet = /** @class */ (function (_super) {
             var pwDerivedKey;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.deriveKeyFromPasswordAsync(this.keystore, password)];
+                    case 0: return [4 /*yield*/, LightWalletUtils_1.LightWalletUtils.deriveKeyFromPasswordAsync(this.keystore, password)];
                     case 1:
                         pwDerivedKey = _a.sent();
-                        this.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
+                        LightWalletUtils_1.LightWalletUtils.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
                         return [2 /*return*/, this.keystore.getSeed(pwDerivedKey)];
                 }
             });
@@ -114,15 +102,15 @@ var LightWallet = /** @class */ (function (_super) {
             var pwDerivedKey;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.deriveKeyFromPasswordAsync(this.keystore, password)];
+                    case 0: return [4 /*yield*/, LightWalletUtils_1.LightWalletUtils.deriveKeyFromPasswordAsync(this.keystore, password)];
                     case 1:
                         pwDerivedKey = _a.sent();
-                        this.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
+                        LightWalletUtils_1.LightWalletUtils.validatePwDerivedKeyOrThrow(pwDerivedKey, this.keystore);
                         return [2 /*return*/, this.keystore.exportPrivateKey(account, pwDerivedKey)];
                 }
             });
         });
     };
     return LightWallet;
-}(LightWalletBase_1.LightWalletBase));
+}());
 exports.LightWallet = LightWallet;
