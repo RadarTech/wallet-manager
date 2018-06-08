@@ -10,8 +10,7 @@ describe('LightWallet', () => {
   let lightWallet: LightWallet;
 
   beforeEach(async () => {
-    const walletManager = new LightWalletManager();
-    lightWallet = await walletManager.createWalletAsync({ password, storageKeyName });
+    lightWallet = await LightWalletManager.createWalletAsync({ password, storageKeyName });
   });
 
   it('can add a single account', async () => {

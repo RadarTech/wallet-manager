@@ -21,13 +21,10 @@ yarn add @radarrelay/wallet-manager
 
 ## LightWallet Usage
 
-### Instantiation
+### Import
 
 ```javascript
 import { LightWalletManager } from '@radarrelay/wallet-manager';
-
-// Instantiate the LightWalletManager
-const walletManager = new LightWalletManager();
 ```
 
 ### LightWalletManager Methods
@@ -45,7 +42,7 @@ Options:
 * **storageKeyName** (optional) The local storage key or file name.
 
 ```javascript
-const lightWallet = await walletManager.createWalletAsync(options: LightWalletOptions): Promise<LightWallet>
+const lightWallet = await LightWalletManager.createWalletAsync(options: LightWalletOptions): Promise<LightWallet>
 ```
 
 **Save an existing wallet**
@@ -53,7 +50,7 @@ const lightWallet = await walletManager.createWalletAsync(options: LightWalletOp
 Save the encrypted lightwallet into local storage or as a file.
 
 ```javascript
-walletManager.saveWallet(wallet: LightWallet): void
+LightWalletManager.saveWallet(wallet: LightWallet): void
 ```
 
 **Load an existing wallet**
@@ -61,7 +58,7 @@ walletManager.saveWallet(wallet: LightWallet): void
 Load the lightwallet from local storage or the file system.
 
 ```javascript
-const lightWallet = await walletManager.loadWalletAsync(password: string): Promise<LightWallet>
+const lightWallet = await LightWalletManager.loadWalletAsync(password: string): Promise<LightWallet>
 ```
 
 

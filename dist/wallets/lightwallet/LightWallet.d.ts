@@ -1,8 +1,7 @@
 import { LightWalletSigner } from './LightWalletSigner';
 import { Wallet, WalletType } from '../../types';
 import { keystore, signing } from 'eth-lightwallet';
-import { LightWalletBase } from './LightWalletBase';
-export declare class LightWallet extends LightWalletBase implements Wallet {
+export declare class LightWallet implements Wallet {
     type: WalletType;
     signer: LightWalletSigner;
     keystore: keystore;

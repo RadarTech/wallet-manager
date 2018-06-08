@@ -6,15 +6,15 @@ export class Store {
   /**
    * Check for any storage support
    */
-  public static IsStorageSupported(): boolean {
-    return Store.IsFileStorageSupported() || Store.IsLocalStorageSupported();
+  public static isStorageSupported(): boolean {
+    return Store.isFileStorageSupported() || Store.isLocalStorageSupported();
   }
 
  /**
   * Check if local storage is supported
   *
   */
-  public static IsLocalStorageSupported(): boolean {
+  public static isLocalStorageSupported(): boolean {
     if (typeof localStorage === 'undefined') {
       return false;
     }
@@ -32,7 +32,7 @@ export class Store {
   /**
    * Check if file storage is supported
    */
-  public static IsFileStorageSupported(): boolean {
+  public static isFileStorageSupported(): boolean {
     if (typeof fs.writeFileSync === 'undefined') return false;
 
     try {
@@ -50,10 +50,10 @@ export class Store {
   * @param {Wallet} wallet The wallet to save
   * @param {string} [keyName='s-wallet'] The key identifier
   */
-  public saveWallet(wallet: Wallet, keyName: string = 's-wallet') {
-    if (Store.IsLocalStorageSupported()) {
+  public static saveWallet(wallet: Wallet, keyName: string = 's-wallet') {
+    if (Store.isLocalStorageSupported()) {
       localStorage.setItem(keyName, wallet.serialize());
-    } else if (Store.IsFileStorageSupported) {
+    } else if (Store.isFileStorageSupported) {
       fs.writeFileSync('.' + keyName, wallet.serialize());
     } else {
       return false;
@@ -67,11 +67,11 @@ export class Store {
   *
   * @param {string} [keyName='s-wallet']  The key identifier
   */
-  public loadWallet(keyName: string = 's-wallet') {
+  public static loadWallet(keyName: string = 's-wallet') {
     let serializedKeystore = null;
-    if (Store.IsLocalStorageSupported()) {
+    if (Store.isLocalStorageSupported()) {
       serializedKeystore = localStorage.getItem(keyName);
-    } else if (Store.IsFileStorageSupported()) {
+    } else if (Store.isFileStorageSupported()) {
       try {
         serializedKeystore = fs.readFileSync('.' + keyName).toString();
       } catch (err) {
