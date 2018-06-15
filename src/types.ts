@@ -23,21 +23,6 @@ export interface PartialTxParams {
   chainId: number; // EIP 155 chainId - mainnet: 1, ropsten: 3
 }
 
-export interface MsgParams {
-  from: string;
-  data: string;
-}
-
-export interface UnsignedPayload {
-  type: PayloadType;
-  params: PartialTxParams | MsgParams;
-}
-
-export interface JSONRPCPayload {
-  params: any[];
-  method: string;
-}
-
 export interface Signer {
   signPersonalMessageAsync(account: string, message: string): Promise<string>;
   signPersonalMessageHashAsync(account: string, hash: string): Promise<string>;
@@ -49,18 +34,6 @@ export interface Wallet {
   signer: Signer;
   getAccounts(): string[];
   serialize(): string;
-}
-
-export interface TransactionManager {
-  getAccounts(): string[];
-  signTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
-  signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
-}
-
-export enum PayloadType {
-  Tx,
-  Msg,
-  PersonalMsg
 }
 
 export enum WalletError {

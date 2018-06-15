@@ -21,18 +21,6 @@ export interface PartialTxParams {
     data?: string;
     chainId: number;
 }
-export interface MsgParams {
-    from: string;
-    data: string;
-}
-export interface UnsignedPayload {
-    type: PayloadType;
-    params: PartialTxParams | MsgParams;
-}
-export interface JSONRPCPayload {
-    params: any[];
-    method: string;
-}
 export interface Signer {
     signPersonalMessageAsync(account: string, message: string): Promise<string>;
     signPersonalMessageHashAsync(account: string, hash: string): Promise<string>;
@@ -43,16 +31,6 @@ export interface Wallet {
     signer: Signer;
     getAccounts(): string[];
     serialize(): string;
-}
-export interface TransactionManager {
-    getAccounts(): string[];
-    signTransactionAsync(unsignedTx: UnsignedPayload): Promise<any>;
-    signMessageAsync(unsignedMsg: UnsignedPayload): Promise<any>;
-}
-export declare enum PayloadType {
-    Tx = 0,
-    Msg = 1,
-    PersonalMsg = 2
 }
 export declare enum WalletError {
     StorageDisabled = "STORAGE_DISABLED",
