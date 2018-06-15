@@ -1,2 +1,2 @@
-export { LightWalletManager } from './wallets/lightwallet';
+export * from './wallets/lightwallet';
 export * from './types';
