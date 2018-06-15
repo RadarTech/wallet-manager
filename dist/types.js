@@ -1,11 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var PayloadType;
-(function (PayloadType) {
-    PayloadType[PayloadType["Tx"] = 0] = "Tx";
-    PayloadType[PayloadType["Msg"] = 1] = "Msg";
-    PayloadType[PayloadType["PersonalMsg"] = 2] = "PersonalMsg";
-})(PayloadType = exports.PayloadType || (exports.PayloadType = {}));
 var WalletError;
 (function (WalletError) {
     WalletError["StorageDisabled"] = "STORAGE_DISABLED";
