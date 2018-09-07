@@ -2,12 +2,16 @@ import * as EthereumTx from 'ethereumjs-tx';
 import * as lightwallet from 'eth-lightwallet';
 import { ECSignatureBuffer, PartialTxParams, Signer } from '../../types';
 
+// Type alias is required here to resolve this issue:
+// https://stackoverflow.com/questions/48640828/class-is-referenced-directly-or-indirectly-in-its-own-type-annotation
+type SigningType = typeof lightwallet.signing;
+
 export class LightWalletSigner implements Signer {
   private _keystore: any;
   private _signing: any;
   private _pwDerivedKey: Uint8Array;
 
-  constructor(keystore: lightwallet.keystore, signing: lightwallet.signing, pwDerivedKey: Uint8Array) {
+  constructor(keystore: lightwallet.keystore, signing: SigningType, pwDerivedKey: Uint8Array) {
     this._keystore = keystore;
     this._signing = signing;
     this._pwDerivedKey = pwDerivedKey;

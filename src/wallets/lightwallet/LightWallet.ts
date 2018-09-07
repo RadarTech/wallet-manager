@@ -4,14 +4,18 @@ import { keystore, signing } from 'eth-lightwallet';
 import { Store } from '../../Store';
 import { LightWalletUtils } from './LightWalletUtils';
 
+// Type alias is required here to resolve this issue:
+// https://stackoverflow.com/questions/48640828/class-is-referenced-directly-or-indirectly-in-its-own-type-annotation
+type SigningType = typeof signing;
+
 export class LightWallet implements Wallet {
   public type: WalletType;
   public signer: LightWalletSigner;
   public keystore: keystore;
-  public signing: signing;
+  public signing: SigningType;
   public pwDerivedKey: Uint8Array;
 
-  constructor(keystore: keystore, signing: signing, pwDerivedKey: Uint8Array) {
+  constructor(keystore: keystore, signing: SigningType, pwDerivedKey: Uint8Array) {
     this.keystore = keystore;
     this.signing = signing;
     this.pwDerivedKey = pwDerivedKey;
