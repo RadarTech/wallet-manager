@@ -4,8 +4,6 @@ import { keystore, signing } from 'eth-lightwallet';
 import { Store } from '../../Store';
 import { LightWalletUtils } from './LightWalletUtils';
 
-// Type alias is required here to resolve this issue:
-// https://stackoverflow.com/questions/48640828/class-is-referenced-directly-or-indirectly-in-its-own-type-annotation
 type SigningType = typeof signing;
 
 export class LightWallet implements Wallet {
