@@ -1,13 +1,14 @@
 import { LightWalletSigner } from './LightWalletSigner';
 import { Wallet, WalletType } from '../../types';
 import { keystore, signing } from 'eth-lightwallet';
+declare type SigningType = typeof signing;
 export declare class LightWallet implements Wallet {
     type: WalletType;
     signer: LightWalletSigner;
     keystore: keystore;
-    signing: signing;
+    signing: SigningType;
     pwDerivedKey: Uint8Array;
-    constructor(keystore: keystore, signing: signing, pwDerivedKey: Uint8Array);
+    constructor(keystore: keystore, signing: SigningType, pwDerivedKey: Uint8Array);
     /**
      * Adds one or more accounts to the wallet
      *
@@ -38,3 +39,4 @@ export declare class LightWallet implements Wallet {
      */
     exportAccountPrivateKeyAsync(account: string, password: string): Promise<string>;
 }
+export {};

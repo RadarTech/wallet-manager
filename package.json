@@ -21,6 +21,7 @@
     "@types/lodash": "^4.14.109",
     "@types/mocha": "^2.2.43",
     "@types/node": "^8.0.46",
+    "@types/eth-lightwallet": "3.0.0",
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
     "tslint": "^5.8.0",

@@ -1,10 +1,11 @@
 import * as lightwallet from 'eth-lightwallet';
 import { PartialTxParams, Signer } from '../../types';
+declare type SigningType = typeof lightwallet.signing;
 export declare class LightWalletSigner implements Signer {
     private _keystore;
     private _signing;
     private _pwDerivedKey;
-    constructor(keystore: lightwallet.keystore, signing: lightwallet.signing, pwDerivedKey: Uint8Array);
+    constructor(keystore: lightwallet.keystore, signing: SigningType, pwDerivedKey: Uint8Array);
     /**
      * Sign a personal message hash
      *
@@ -26,3 +27,4 @@ export declare class LightWalletSigner implements Signer {
      */
     signTransactionAsync(txParams: PartialTxParams): Promise<string>;
 }
+export {};
